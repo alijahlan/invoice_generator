@@ -1,5 +1,7 @@
 package org.invoice_generator;
 
+import org.invoice_generator.view.MainFrame;
+
 /**
  * Hello world!
  *
@@ -8,6 +10,6 @@ public class App
 {
     public static void main( String[] args )
     {
-        System.out.println( "Hello there!" );
+        new MainFrame("Design Preview [NewJFrame").setVisible(true);
     }
 }
