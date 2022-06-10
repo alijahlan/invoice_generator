@@ -4,9 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b5d22742-6d91-4528-9a62-4d7d9a05a51e" name="Changes" comment="Left panel design">
+    <list default="true" id="b5d22742-6d91-4528-9a62-4d7d9a05a51e" name="Changes" comment="Right panel design only the top section without the invoice item list">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/invoice_generator/App.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/invoice_generator/App.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/invoice_generator/view/MainFrame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/invoice_generator/view/MainFrame.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -69,7 +68,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1654638736848</updated>
-      <workItem from="1654638738496" duration="57476000" />
+      <workItem from="1654638738496" duration="63893000" />
     </task>
     <task id="LOCAL-00001" summary="git test">
       <created>1654639347824</created>
@@ -85,7 +84,14 @@
       <option name="project" value="LOCAL" />
       <updated>1654769515166</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Right panel design only the top section without the invoice item list">
+      <created>1654894926573</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1654894926573</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -105,6 +111,7 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="git test" />
     <MESSAGE value="Left panel design" />
-    <option name="LAST_COMMIT_MESSAGE" value="Left panel design" />
+    <MESSAGE value="Right panel design only the top section without the invoice item list" />
+    <option name="LAST_COMMIT_MESSAGE" value="Right panel design only the top section without the invoice item list" />
   </component>
 </project>

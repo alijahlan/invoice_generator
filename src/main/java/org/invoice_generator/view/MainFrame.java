@@ -1,6 +1,7 @@
 package org.invoice_generator.view;
 
 import javax.swing.*;
+import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.JTableHeader;
@@ -17,7 +18,7 @@ public class MainFrame extends JFrame implements ActionListener {
     JMenuItem loadFile;
     JMenuItem saveFile;
     JTable invTable;
-
+    JTable invItemsTable;
     JButton createBtn;
     JButton deleteBtn;
     JButton saveBtn;
@@ -33,12 +34,11 @@ public class MainFrame extends JFrame implements ActionListener {
  //        Main frame setting
 
         //setLayout(new BorderLayout());
-        setSize(1300,750);
+        setSize(1300,800);
         //setLocation(50,10);
         Toolkit toolkit = getToolkit();
         Dimension size = toolkit.getScreenSize();
-        setLocation(size.width/2 - getWidth()/2,
-                size.height/2 - getHeight()/2);
+        setLocation(size.width/2 - getWidth()/2,0);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setResizable(false);
 
@@ -64,7 +64,7 @@ public class MainFrame extends JFrame implements ActionListener {
         container.setLayout(new BoxLayout(getContentPane(), BoxLayout.X_AXIS));
         JPanel leftPanel = new JPanel(new FlowLayout(FlowLayout.LEADING));
         //leftPanel.setBackground(Color.BLUE);
-        leftPanel.setBounds(0,0, getWidth() / 2, 500);
+        //leftPanel.setBounds(0,0, getWidth() / 2, 500);
         leftPanel.setAlignmentX(SwingConstants.LEFT);
 
         JPanel rightPanel = new JPanel(new FlowLayout(FlowLayout.LEADING));
@@ -72,7 +72,7 @@ public class MainFrame extends JFrame implements ActionListener {
         //rightPanel.setBounds(getWidth()/2,0, 500, 500);
         rightPanel.setAlignmentX(SwingConstants.LEFT);
 
-
+// Demo data for table 1 on the left side
         String[] cols = {"No.","Date","Customer","Total"};
         String[][] data = {
                 {"1","555","Ali","222"},
@@ -87,7 +87,7 @@ public class MainFrame extends JFrame implements ActionListener {
         tableHeader.setBackground(Color.WHITE);
 
         JScrollPane tableSP = new JScrollPane(invTable);
-        tableSP.setPreferredSize(new Dimension(getWidth() / 2 - 20, getHeight() - 200));
+        tableSP.setPreferredSize(new Dimension(getWidth() / 2 - 20, getHeight() - 240));
         leftPanel.setAlignmentX(Component.LEFT_ALIGNMENT);
 
         DefaultTableCellRenderer renderer;
@@ -98,6 +98,8 @@ public class MainFrame extends JFrame implements ActionListener {
         //leftPanel.setLayout(new FlowLayout());
         JLabel lbl = new JLabel("Invoices Table");
         lbl.setBorder(labelMargin);
+
+
         // Left panel Buttons
         JPanel leftPanelBtn = new JPanel(new GridLayout(1,1,30,10));
 
@@ -120,6 +122,16 @@ public class MainFrame extends JFrame implements ActionListener {
         leftPanel.add(leftPanelBtn);
 
 //        Right panel
+
+        // Demo data for table 1 on the right side
+        String[] cols2 = {"No.","Item Name","Item Price","Count", "Item Total"};
+        String[][] data2 = {
+                {"1","555","Ali","222","5255"},
+                {"2","555","Ali","222","5255"},
+                {"3","555","Ali","222","5255"},
+                {"4","555","Ali","222","5255"}
+        };
+
 
         JPanel rightPanelInvData = new JPanel(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
@@ -183,14 +195,57 @@ public class MainFrame extends JFrame implements ActionListener {
         rightPanelInvData.add(invTotalLbl,gbc);
 
         JLabel invTotal = new JLabel("254.70");
+        gbc.insets = new Insets(20,0,10,0);
         gbc.weightx = 0.95;
         gbc.gridx = 1;
         gbc.gridy = 3;
         rightPanelInvData.add(invTotal,gbc);
 
+// Group of Items for each invoice
+
+        Border titlePanel = BorderFactory.createTitledBorder("Invoice Items");
+        JPanel itemsList = new JPanel();
+        itemsList.setBorder(titlePanel);
+
+        invItemsTable = new JTable(data2 , cols2);
+        JTableHeader tableHeaderListItems = invItemsTable.getTableHeader();
+        tableHeaderListItems.setBackground(Color.WHITE);
+
+        JScrollPane tableSP2 = new JScrollPane(invItemsTable);
+        tableSP2.setPreferredSize(new Dimension(getWidth() / 2 - 50, getHeight() - 380));
+        leftPanel.setAlignmentX(Component.LEFT_ALIGNMENT);
+
+        DefaultTableCellRenderer renderer2;
+        renderer2 = (DefaultTableCellRenderer) invItemsTable.getTableHeader().getDefaultRenderer();
+        renderer2.setHorizontalAlignment(JLabel.LEFT);
+
+        itemsList.add(tableSP2);
+
+
+        // Right panel Buttons
+        JPanel rightPanelBtn = new JPanel(new GridLayout(1,1,100,10));
+        EmptyBorder labelMargin2 = new EmptyBorder(20,30,15,0);
+        saveBtn = new JButton("Save");
+        saveBtn.addActionListener(this);
+
+        cancelBtn = new JButton("Cancel");
+        cancelBtn.addActionListener(this);
+
+        JLabel emptyLbl1 = new JLabel("");
+        emptyLbl1.setAlignmentX(SwingConstants.LEFT);
+        emptyLbl1.setBorder(labelMargin2);
+        rightPanelBtn.add(emptyLbl1);
+        rightPanelBtn.add(saveBtn);
+
+        rightPanelBtn.add(cancelBtn);
+        rightPanelBtn.setAlignmentX(JLabel.CENTER);
+
+
 
 
         rightPanel.add(rightPanelInvData);
+        rightPanel.add(itemsList);
+        rightPanel.add(rightPanelBtn);
 
 
 
