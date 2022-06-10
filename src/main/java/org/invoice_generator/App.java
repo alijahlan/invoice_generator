@@ -10,6 +10,7 @@ public class App
 {
     public static void main( String[] args )
     {
+        //new FrameTest().setVisible(true);
         new MainFrame("Design Preview [NewJFrame").setVisible(true);
     }
 }
