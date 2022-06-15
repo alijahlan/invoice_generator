@@ -241,7 +241,7 @@ public class MainFrame extends JFrame implements ActionListener {
         gbc.weightx = 0.95;
         gbc.gridx = 1;
         gbc.gridy = 3;
-
+        rightPanelInvData.add(invTotal,gbc);
 
         JLabel guide = new JLabel("To add Item Click on the Table");
         guide.setForeground(Color.RED);
@@ -453,7 +453,7 @@ public class MainFrame extends JFrame implements ActionListener {
                     invNo.setText((String) invTable.getValueAt(selectedRow[0],0));
                     invDate.setText((String) invTable.getValueAt(selectedRow[0],1));
                     customerName.setText((String) invTable.getValueAt(selectedRow[0],2));
-                    invTotal.setText((String) invTable.getValueAt(selectedRow[0],3));
+                    invTotal.setText((String) invTable.getValueAt(selectedRow[0],4));
 
                 }
                 else {
@@ -620,11 +620,15 @@ public class MainFrame extends JFrame implements ActionListener {
 
                         }
                     }
+
+                    String itemTotal;
                     if(result1!=null && result2!=null && result3!=null) {
 
                         if(Integer.valueOf(result3) > 0 || Double.valueOf(result2) > 0) {
 
-                            String[] row1 = new String[]{String.valueOf(1), result1, result2, result3, String.valueOf(Integer.parseInt(result3) * Double.parseDouble(result2))};
+                            itemTotal =  String.valueOf(Integer.parseInt(result3) * Double.parseDouble(result2));
+                            invTotal.setText(itemTotal);
+                            String[] row1 = new String[]{String.valueOf(1), result1, result2, result3,itemTotal};
                             //System.out.println(invTable.getValueAt(selectedRow[0],1));
                             System.out.println(dataModel.get(0)[1]);
                             if (dataModel.get(0)[1] == "") {
