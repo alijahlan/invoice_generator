@@ -491,6 +491,9 @@ public class MainFrame extends JFrame implements ActionListener {
                 break;
 
             case "cancel":
+                try {
+
+
                 //ActionsController.cancelInvoice();
                 selectedRow = invTable.getSelectedRows();
                 if(selectedRow.length>0){
@@ -516,13 +519,12 @@ public class MainFrame extends JFrame implements ActionListener {
                         temp3.add(new String[]{"","","","",""});
                         //invItemsModel.AddCSVData(temp2);
                         invItemsTable.setModel(new InvoiceLineModel());
-
                     }
 
-
+                }
+                } catch (ArrayIndexOutOfBoundsException ee){
 
                 }
-
                 break;
         }
 
