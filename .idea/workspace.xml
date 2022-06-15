@@ -4,8 +4,18 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b5d22742-6d91-4528-9a62-4d7d9a05a51e" name="Changes" comment="Right panel design only the top section without the invoice item list">
+    <list default="true" id="b5d22742-6d91-4528-9a62-4d7d9a05a51e" name="Changes" comment="Fetch the data from files, allow to create new, cancel and delete invoice">
+      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/dataFiles/InvoiceHeader.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/dataFiles/InvoiceLine.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/invoice_generator/controller/ActionsController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/invoice_generator/model/FileOperations.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/invoice_generator/model/InvoiceHeaderModel.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/invoice_generator/model/InvoiceLineModel.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/invoice_generator/model/InvoiceHeader.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/invoice_generator/model/InvoiceHeader.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/invoice_generator/model/InvoiceLine.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/invoice_generator/model/InvoiceLine.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/invoice_generator/view/MainFrame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/invoice_generator/view/MainFrame.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -21,6 +31,11 @@
     </option>
   </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="master" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="MarkdownSettingsMigration">
@@ -32,14 +47,20 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "WebServerToolWindowFactoryState": "false"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/clipse-workspaces/intellij/invoice_generator&quot;
   }
-}]]></component>
+}</component>
+  <component name="RecentsManager">
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="org.invoice_generator.model" />
+    </key>
+  </component>
   <component name="RunManager">
     <configuration name="App" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="org.invoice_generator.App" />
@@ -68,7 +89,9 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1654638736848</updated>
-      <workItem from="1654638738496" duration="63893000" />
+      <workItem from="1654638738496" duration="64181000" />
+      <workItem from="1654954510472" duration="136219000" />
+      <workItem from="1655294406088" duration="2920000" />
     </task>
     <task id="LOCAL-00001" summary="git test">
       <created>1654639347824</created>
@@ -91,7 +114,21 @@
       <option name="project" value="LOCAL" />
       <updated>1654894926573</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="the Right panel design full design">
+      <created>1654904601129</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1654904601129</updated>
+    </task>
+    <task id="LOCAL-00005" summary="the Right panel items full design">
+      <created>1654904644827</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1654904644827</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -112,6 +149,19 @@
     <MESSAGE value="git test" />
     <MESSAGE value="Left panel design" />
     <MESSAGE value="Right panel design only the top section without the invoice item list" />
-    <option name="LAST_COMMIT_MESSAGE" value="Right panel design only the top section without the invoice item list" />
+    <MESSAGE value="the Right panel design full design" />
+    <MESSAGE value="the Right panel items full design" />
+    <MESSAGE value="Fetch the data from files, allow to create new, cancel and delete invoice" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fetch the data from files, allow to create new, cancel and delete invoice" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <breakpoint enabled="true" type="java-exception">
+          <properties class="java.lang.ClassCastException" package="java.lang" />
+          <option name="timeStamp" value="1" />
+        </breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>
