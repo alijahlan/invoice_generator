@@ -4,8 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b5d22742-6d91-4528-9a62-4d7d9a05a51e" name="Changes" comment="Right panel design only the top section without the invoice item list">
+    <list default="true" id="b5d22742-6d91-4528-9a62-4d7d9a05a51e" name="Changes" comment="Show the total invoice">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/dataFiles/InvoiceHeader.csv" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dataFiles/InvoiceHeader.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/dataFiles/InvoiceLine.csv" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dataFiles/InvoiceLine.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/invoice_generator/controller/ActionsController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/invoice_generator/controller/ActionsController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/invoice_generator/view/MainFrame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/invoice_generator/view/MainFrame.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -91,7 +94,14 @@
       <option name="project" value="LOCAL" />
       <updated>1654894926573</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Show the total invoice">
+      <created>1655300089714</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1655300089714</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -112,6 +122,18 @@
     <MESSAGE value="git test" />
     <MESSAGE value="Left panel design" />
     <MESSAGE value="Right panel design only the top section without the invoice item list" />
-    <option name="LAST_COMMIT_MESSAGE" value="Right panel design only the top section without the invoice item list" />
+    <MESSAGE value="Show the total invoice" />
+    <option name="LAST_COMMIT_MESSAGE" value="Show the total invoice" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/org/invoice_generator/view/MainFrame.java</url>
+          <line>535</line>
+          <option name="timeStamp" value="2" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

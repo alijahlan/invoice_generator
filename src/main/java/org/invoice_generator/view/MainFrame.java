@@ -3,7 +3,6 @@ package org.invoice_generator.view;
 import org.invoice_generator.controller.ActionsController;
 import org.invoice_generator.model.FileOperations;
 import org.invoice_generator.model.InvoiceHeaderModel;
-import org.invoice_generator.model.InvoiceLine;
 import org.invoice_generator.model.InvoiceLineModel;
 
 import javax.swing.*;
@@ -11,7 +10,6 @@ import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
-import javax.swing.event.TableModelEvent;
 import javax.swing.table.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -19,6 +17,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.List;
 
 
 public class MainFrame extends JFrame implements ActionListener {
@@ -295,6 +294,9 @@ public class MainFrame extends JFrame implements ActionListener {
             cancelBtn.setEnabled(false);
         }
 
+        if(invDate.getText()=="" || customerName.getText()==""){
+            saveBtn.setEnabled(false);
+        }
         JLabel emptyLbl1 = new JLabel("");
         emptyLbl1.setAlignmentX(SwingConstants.LEFT);
         emptyLbl1.setBorder(labelMargin2);
@@ -338,6 +340,7 @@ public class MainFrame extends JFrame implements ActionListener {
         switch (e.getActionCommand()){
             case "create":
 
+                saveBtn.setEnabled(true);
                 int index = invoiceHeaderModel.getRowCount()+1;
                 int biggestNo = 1;
                 for (int i = 0; i < invoiceHeaderModel.getRowCount(); i++) {
@@ -389,7 +392,51 @@ public class MainFrame extends JFrame implements ActionListener {
                 break;
 
             case "save":
-                ActionsController.saveInvoice();
+                if( invDate.getText().length() > 0 && (customerName.getText().length() >0) && invTotal.getText().length() > 0) {
+                    //saveBtn.setEnabled(false);
+                    System.out.println((invDate.getText()!=""));
+                TableModel model = invTable.getModel();
+
+                //System.out.println(model.getValueAt(0,0));
+                ArrayList<String[]> newRow = new ArrayList<>();
+
+                String[] newRow1 = {invNo.getText(), invDate.getText(), customerName.getText(), invTotal.getText()};
+
+                boolean isExist = false;
+                int indexExistItem = -1;
+                for(int row = 0; row < model.getRowCount(); row++) {
+                    String[] singleRow = new String[model.getColumnCount()];
+                    for(int column = 0; column < model.getColumnCount(); column++) {
+                        singleRow[column]= (String) model.getValueAt(row, column);
+
+                    }
+
+                    newRow.add(singleRow);
+
+                    if(singleRow[0]== invNo.getText()){
+                        isExist = true;
+                        indexExistItem = row ;
+                    }
+                }
+
+                if(!isExist){
+
+                newRow.add(newRow1);
+                }
+                else{
+                    if(indexExistItem >=0 ) {
+
+                        newRow.set(indexExistItem, newRow1);
+                    }
+                }
+                //System.out.println(newRow.get(indexExistItem)[1]);
+                //model.setValueAt(newRow1[0],Integer.valueOf(invNo.getText())-1,0);
+
+               ActionsController.saveInvoice(invoiceHeaderModel, newRow);
+                }
+                else{
+                    JOptionPane.showMessageDialog(this, "Please complete all fields");
+                }
                 break;
 
             case "delete":
@@ -417,6 +464,7 @@ public class MainFrame extends JFrame implements ActionListener {
                 if(invTable.getRowCount() <=0){
 
                     cancelBtn.setEnabled(false);
+                    saveBtn.setEnabled(false);
                     invNo.setText("");
                     invDate.setText("");
                     customerName.setText("");
@@ -535,14 +583,23 @@ public class MainFrame extends JFrame implements ActionListener {
 //    Items table listener on the right panel
     private void invItemsListener(final JTable itemsTable){
 
+        final double[] totalInvItems = {0.0};
+
         ListSelectionModel rowSelectionModel = itemsTable.getSelectionModel();
         rowSelectionModel.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
         rowSelectionModel.addListSelectionListener(new ListSelectionListener() {
 
             public void valueChanged(ListSelectionEvent e) {
+                System.out.println(invTotal.getText().length());
+                if(invTotal.getText().length()>0){
+                    System.out.println(Double.valueOf(invTotal.getText()));
+                    totalInvItems[0] = Double.valueOf(invTotal.getText());
+                }
+                else{
+                    totalInvItems[0]=0.0;
+                }
                 //counter++;
                 //String selectedData = null;
-
                 int[] selectedRow = itemsTable.getSelectedRows();
                 int[] selectedColumns = itemsTable.getSelectedColumns();
 
@@ -552,9 +609,7 @@ public class MainFrame extends JFrame implements ActionListener {
                     ArrayList<String[]> temp = new ArrayList<>();
 
                     ArrayList<String[]> dataModel = invItemsModel.Data;
-                        //item[]
-                        //String[] row = item;
-                        //double itemTotal =  Double.valueOf(row[3]) * Integer.valueOf(row[4]);
+
                     String result1="",result2 = "",result3 = "";
 
                     result1 = JOptionPane.showInputDialog("Enter item name:");
@@ -626,9 +681,12 @@ public class MainFrame extends JFrame implements ActionListener {
 
                         if(Integer.valueOf(result3) > 0 || Double.valueOf(result2) > 0) {
 
-                            itemTotal =  String.valueOf(Integer.parseInt(result3) * Double.parseDouble(result2));
+                            double singleItem = Integer.parseInt(result3) * Double.parseDouble(result2);
+                            totalInvItems[0] += singleItem;
+                            itemTotal =  String.valueOf(totalInvItems[0]);
+                            totalInvItems[0]=0.0;
                             invTotal.setText(itemTotal);
-                            String[] row1 = new String[]{String.valueOf(1), result1, result2, result3,itemTotal};
+                            String[] row1 = new String[]{String.valueOf(1), result1, result2, result3,String.valueOf(singleItem)};
                             //System.out.println(invTable.getValueAt(selectedRow[0],1));
                             System.out.println(dataModel.get(0)[1]);
                             if (dataModel.get(0)[1] == "") {

@@ -1,10 +1,12 @@
 package org.invoice_generator.controller;
 
 import org.invoice_generator.model.InvoiceHeaderModel;
+import org.invoice_generator.model.InvoiceLineModel;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
+import java.util.ArrayList;
 
 public class ActionsController {
 
@@ -12,7 +14,10 @@ public class ActionsController {
         //invTableModel.addRow(data);
     }
 
-    public static void saveInvoice() {
+    public static void saveInvoice(InvoiceHeaderModel invoiceHeaderModel, ArrayList<String[]> newRow) {
+
+        invoiceHeaderModel.AddCSVData(newRow);
+        invoiceHeaderModel.fireTableDataChanged();
     }
 
     public static void deleteInvoice(Component parent , InvoiceHeaderModel model, int row) {
