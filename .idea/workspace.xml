@@ -69,6 +69,7 @@
       <option name="presentableId" value="Default" />
       <updated>1654638736848</updated>
       <workItem from="1654638738496" duration="63893000" />
+      <workItem from="1655367391293" duration="1295000" />
     </task>
     <task id="LOCAL-00001" summary="git test">
       <created>1654639347824</created>
@@ -112,7 +113,21 @@
       <option name="project" value="LOCAL" />
       <updated>1655334718914</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="completing the following functions delete, add, save, cancel and put some constraints on the input data and disable save the incomplete data">
+      <created>1655335042961</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1655335042961</updated>
+    </task>
+    <task id="LOCAL-00008" summary="completing the following functions delete, add, save, cancel and put some constraints on the input data and disable save the incomplete data">
+      <created>1655335065124</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1655335065124</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -142,7 +157,7 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/org/invoice_generator/view/MainFrame.java</url>
-          <line>537</line>
+          <line>547</line>
           <option name="timeStamp" value="2" />
         </line-breakpoint>
       </breakpoints>

@@ -392,47 +392,57 @@ public class MainFrame extends JFrame implements ActionListener {
                 break;
 
             case "save":
+                int []selectedRowSave = invTable.getSelectedRows();
                 if( invDate.getText().length() > 0 && (customerName.getText().length() >0) && invTotal.getText().length() > 0) {
                     //saveBtn.setEnabled(false);
-                    System.out.println((invDate.getText()!=""));
-                TableModel model = invTable.getModel();
+                    System.out.println((invDate.getText() != ""));
+                    TableModel model = invTable.getModel();
 
-                //System.out.println(model.getValueAt(0,0));
-                ArrayList<String[]> newRow = new ArrayList<>();
+                    //System.out.println(model.getValueAt(0,0));
+                    ArrayList<String[]> newRow = new ArrayList<>();
 
-                String[] newRow1 = {invNo.getText(), invDate.getText(), customerName.getText(), invTotal.getText()};
+                    String[] newRow1 = {invNo.getText(), invDate.getText(), customerName.getText(), invTotal.getText()};
 
-                boolean isExist = false;
-                int indexExistItem = -1;
-                for(int row = 0; row < model.getRowCount(); row++) {
-                    String[] singleRow = new String[model.getColumnCount()];
-                    for(int column = 0; column < model.getColumnCount(); column++) {
-                        singleRow[column]= (String) model.getValueAt(row, column);
+                    boolean isExist = false;
+                    int indexExistItem = -1;
+                    for (int row = 0; row < model.getRowCount(); row++) {
+                        String[] singleRow = new String[model.getColumnCount()];
+                        for (int column = 0; column < model.getColumnCount(); column++) {
+                            singleRow[column] = (String) model.getValueAt(row, column);
 
+                        }
+
+                        newRow.add(singleRow);
+
+                        if (singleRow[0] == invNo.getText()) {
+                            isExist = true;
+                            indexExistItem = row;
+
+
+                        }
                     }
 
-                    newRow.add(singleRow);
+                    if (!isExist) {
 
-                    if(singleRow[0]== invNo.getText()){
-                        isExist = true;
-                        indexExistItem = row ;
+                        newRow.add(newRow1);
+
+                    } else {
+                        if (indexExistItem >= 0) {
+
+                            newRow.set(indexExistItem, newRow1);
+
+                        }
                     }
+                    //System.out.println(newRow.get(indexExistItem)[1]);
+                    //model.setValueAt(newRow1[0],Integer.valueOf(invNo.getText())-1,0);
+
+                    ActionsController.saveInvoice(invoiceHeaderModel, newRow);
+                    if (indexExistItem >= 0){
+                        invTable.setRowSelectionInterval(indexExistItem, indexExistItem);
                 }
-
-                if(!isExist){
-
-                newRow.add(newRow1);
-                }
-                else{
-                    if(indexExistItem >=0 ) {
-
-                        newRow.set(indexExistItem, newRow1);
+                    else{
+                        invTable.setRowSelectionInterval(invTable.getRowCount()-1, invTable.getRowCount()-1);
                     }
-                }
-                //System.out.println(newRow.get(indexExistItem)[1]);
-                //model.setValueAt(newRow1[0],Integer.valueOf(invNo.getText())-1,0);
-
-               ActionsController.saveInvoice(invoiceHeaderModel, newRow);
                 }
                 else{
                     JOptionPane.showMessageDialog(this, "Please complete all fields");
