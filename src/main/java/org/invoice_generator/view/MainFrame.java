@@ -17,7 +17,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.io.File;
 import java.util.ArrayList;
-import java.util.List;
 
 
 public class MainFrame extends JFrame implements ActionListener {
@@ -41,6 +40,7 @@ public class MainFrame extends JFrame implements ActionListener {
     JTextField invDate;
     JTextField customerName;
     JLabel invTotal;
+    JLabel guideLbl;
     String[] invTableCols;
     String[][] invTableData;
 
@@ -59,8 +59,8 @@ public class MainFrame extends JFrame implements ActionListener {
         super(title);
 
 
-        readInvFile = FileOperations.readFile(invTablePath);
-        readItemsFile = FileOperations.readFile(invTableItemsPath);
+        readInvFile = FileOperations.readFile(invTablePath,this);
+        readItemsFile = FileOperations.readFile(invTableItemsPath,this);
 
 
         // Demo data for table 1 on the left side
@@ -68,6 +68,7 @@ public class MainFrame extends JFrame implements ActionListener {
         invTable = new JTable(invoiceHeaderModel);
         invTable.setDefaultEditor(Object.class, null);
         //invTable.setModel(invTableModel);
+
         invoiceHeaderModel.AddCSVData(readInvFile);
 
         // Demo data for table 2 on the right side
@@ -75,6 +76,7 @@ public class MainFrame extends JFrame implements ActionListener {
 
         invItemsModel = new InvoiceLineModel();
         invItemsModel.AddCSVData(readItemsFile);
+
        //invItemsCols = new String[]{"No.", "Item Name", "Item Price", "Count", "Item Total"};
         //invItemsData = new String[][]{};
         // System.out.println(invItemsModel.getColumnCount());
@@ -83,6 +85,7 @@ public class MainFrame extends JFrame implements ActionListener {
 
         //ActionsController.createInvoice(invItemsData);
 
+        System.out.println(readInvFile.get(0)[2]);
 
 
         //        Main frame setting
@@ -242,14 +245,14 @@ public class MainFrame extends JFrame implements ActionListener {
         gbc.gridy = 3;
         rightPanelInvData.add(invTotal,gbc);
 
-        JLabel guide = new JLabel("To add Item Click on the Table");
-        guide.setForeground(Color.RED);
+        guideLbl = new JLabel("To add an Item click the Table");
+        guideLbl.setForeground(Color.RED);
         gbc.insets = new Insets(20,0,0,0);
         gbc.fill = GridBagConstraints.HORIZONTAL;
         gbc.gridwidth = 2;
         gbc.gridx = 0;
         gbc.gridy = 4;
-        rightPanelInvData.add(guide,gbc);
+        rightPanelInvData.add(guideLbl,gbc);
 
 
 // Group of Items for each invoice
@@ -338,7 +341,20 @@ public class MainFrame extends JFrame implements ActionListener {
 
 
         switch (e.getActionCommand()){
+            case "load":
+                JFileChooser fc = new JFileChooser();
+                int result = fc.showOpenDialog(this);
+                if(result == JFileChooser.APPROVE_OPTION) {
+                    String path = fc.getSelectedFile().getPath();
+                    readInvFile = FileOperations.readFile(new File(path), this);
+                    invoiceHeaderModel.AddCSVData(readInvFile);
+                }
+
+                break;
+
             case "create":
+                invItemsTable.setEnabled(true);
+                guideLbl.setText("To add an Item click the Table");
 
                 saveBtn.setEnabled(true);
                 int index = invoiceHeaderModel.getRowCount()+1;
@@ -395,20 +411,20 @@ public class MainFrame extends JFrame implements ActionListener {
                 int []selectedRowSave = invTable.getSelectedRows();
                 if( invDate.getText().length() > 0 && (customerName.getText().length() >0) && invTotal.getText().length() > 0) {
                     //saveBtn.setEnabled(false);
-                    System.out.println((invDate.getText() != ""));
-                    TableModel model = invTable.getModel();
-
+                    //System.out.println((invDate.getText() != ""));
+                    TableModel invTableModel = invTable.getModel();
+                    TableModel invItemsTableModel = invItemsTable.getModel();
                     //System.out.println(model.getValueAt(0,0));
                     ArrayList<String[]> newRow = new ArrayList<>();
 
-                    String[] newRow1 = {invNo.getText(), invDate.getText(), customerName.getText(), invTotal.getText()};
+                    String[] newRowTemp = {invNo.getText(), invDate.getText(), customerName.getText(), invTotal.getText()};
 
                     boolean isExist = false;
                     int indexExistItem = -1;
-                    for (int row = 0; row < model.getRowCount(); row++) {
-                        String[] singleRow = new String[model.getColumnCount()];
-                        for (int column = 0; column < model.getColumnCount(); column++) {
-                            singleRow[column] = (String) model.getValueAt(row, column);
+                    for (int row = 0; row < invTableModel.getRowCount(); row++) {
+                        String[] singleRow = new String[invTableModel.getColumnCount()];
+                        for (int column = 0; column < invTableModel.getColumnCount(); column++) {
+                            singleRow[column] = (String) invTableModel.getValueAt(row, column);
 
                         }
 
@@ -424,19 +440,19 @@ public class MainFrame extends JFrame implements ActionListener {
 
                     if (!isExist) {
 
-                        newRow.add(newRow1);
+                        newRow.add(newRowTemp);
 
                     } else {
                         if (indexExistItem >= 0) {
 
-                            newRow.set(indexExistItem, newRow1);
+                            newRow.set(indexExistItem, newRowTemp);
 
                         }
                     }
                     //System.out.println(newRow.get(indexExistItem)[1]);
-                    //model.setValueAt(newRow1[0],Integer.valueOf(invNo.getText())-1,0);
+                    //model.setValueAt(newRowTemp[0],Integer.valueOf(invNo.getText())-1,0);
 
-                    ActionsController.saveInvoice(invoiceHeaderModel, newRow);
+                    ActionsController.saveInvoice(invoiceHeaderModel, invItemsModel, readInvFile, readItemsFile, newRowTemp);
                     if (indexExistItem >= 0){
                         invTable.setRowSelectionInterval(indexExistItem, indexExistItem);
                 }
@@ -507,7 +523,26 @@ public class MainFrame extends JFrame implements ActionListener {
                 //ActionsController.cancelInvoice();
                 selectedRow = invTable.getSelectedRows();
                 if(selectedRow.length>0){
-                invTable.setRowSelectionInterval(selectedRow[0], selectedRow[0]);
+                    System.out.println(invTable.getRowCount()-1);
+                    System.out.println(selectedRow[0]);
+
+                    if (invTable.getRowCount()-1 > selectedRow[0]){
+                        invTable.setRowSelectionInterval(selectedRow[0]+1, selectedRow[0]+1);
+                        invTable.setRowSelectionInterval(selectedRow[0], selectedRow[0]);
+
+                    } else if (invTable.getRowCount()-1 == selectedRow[0]){
+
+                        //invTable.setRowSelectionAllowed(false);
+                        if (invTable.getRowCount()>1){
+
+                        invTable.setRowSelectionInterval(selectedRow[0]-1, selectedRow[0]-1);
+                        invTable.setRowSelectionInterval(selectedRow[0], selectedRow[0]);
+                        }else{
+                            invTable.clearSelection();
+                            invTable.setRowSelectionInterval(selectedRow[0], selectedRow[0]);
+                        }
+
+                    }
 
                 //selectedRow = invTable.getSelectedRows();
 
@@ -515,6 +550,8 @@ public class MainFrame extends JFrame implements ActionListener {
                     invDate.setText((String) invTable.getValueAt(selectedRow[0],1));
                     customerName.setText((String) invTable.getValueAt(selectedRow[0],2));
                     invTotal.setText((String) invTable.getValueAt(selectedRow[0],4));
+                    invTableListener(invTable);
+                    invItemsModel.AddCSVData((ArrayList<String[]>) invTable.getModel());
 
                 }
                 else {
@@ -529,6 +566,7 @@ public class MainFrame extends JFrame implements ActionListener {
                         temp3.add(new String[]{"","","","",""});
                         //invItemsModel.AddCSVData(temp2);
                         invItemsTable.setModel(new InvoiceLineModel());
+
                     }
 
                 }
@@ -556,7 +594,10 @@ public class MainFrame extends JFrame implements ActionListener {
                 int[] selectedRow = invTable.getSelectedRows();
                 int[] selectedColumns = invTable.getSelectedColumns();
 
+
                 if(selectedRow.length >0){
+                    invItemsTable.setEnabled(false);
+                    guideLbl.setText("You can't add new item");
 
                     invNo.setText((String) invTable.getValueAt(selectedRow[0], 0));
                     invDate.setText((String) invTable.getValueAt(selectedRow[0], 1));
@@ -602,7 +643,8 @@ public class MainFrame extends JFrame implements ActionListener {
         rowSelectionModel.addListSelectionListener(new ListSelectionListener() {
 
             public void valueChanged(ListSelectionEvent e) {
-                System.out.println(invTotal.getText().length());
+                //System.out.println(invTotal.getText().length());
+                System.out.println("clicked");
                 if(invTotal.getText().length()>0){
                     System.out.println(Double.valueOf(invTotal.getText()));
                     totalInvItems[0] = Double.valueOf(invTotal.getText());
@@ -700,7 +742,7 @@ public class MainFrame extends JFrame implements ActionListener {
                             invTotal.setText(itemTotal);
                             String[] row1 = new String[]{String.valueOf(1), result1, result2, result3,String.valueOf(singleItem)};
                             //System.out.println(invTable.getValueAt(selectedRow[0],1));
-                            System.out.println(dataModel.get(0)[1]);
+                            //System.out.println(dataModel.get(0)[1]);
                             if (dataModel.get(0)[1] == "") {
                                 temp.add(row1);
                             } else {
