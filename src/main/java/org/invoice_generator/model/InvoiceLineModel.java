@@ -22,11 +22,11 @@ public class InvoiceLineModel extends AbstractTableModel {
 
     }
 
-//    public  void deleteRow(int row){
-//        Data.remove(row);
-//        //this.fireTableRowsDeleted(row,row);
-//
-//    }
+    public  void deleteRow(int row){
+        Data.remove(row);
+        //this.fireTableRowsDeleted(row,row);
+
+    }
     @Override
     public int getColumnCount() {
         return columnNames.length;// length;

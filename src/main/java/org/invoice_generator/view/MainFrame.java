@@ -17,6 +17,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 
 public class MainFrame extends JFrame implements ActionListener {
@@ -79,13 +81,13 @@ public class MainFrame extends JFrame implements ActionListener {
 
        //invItemsCols = new String[]{"No.", "Item Name", "Item Price", "Count", "Item Total"};
         //invItemsData = new String[][]{};
-        // System.out.println(invItemsModel.getColumnCount());
+
         invItemsTable = new JTable(invItemsModel);
         //invItemsTable.setModel(new DefaultTableModel(invItemsData , invItemsCols));
 
         //ActionsController.createInvoice(invItemsData);
 
-        System.out.println(readInvFile.get(0)[2]);
+
 
 
         //        Main frame setting
@@ -208,6 +210,10 @@ public class MainFrame extends JFrame implements ActionListener {
         rightPanelInvData.add(invDateLbl,gbc);
 
         invDate = new JTextField();
+
+/*        Pattern regxDate = Pattern.compile("^\\d{4}-\\d{2}-\\d{2}$");
+        Matcher matchDate = regxDate.matcher(invDate.getText());*/
+
         gbc.weightx = 0.95;
         gbc.gridx = 1;
         gbc.gridy = 1;
@@ -395,12 +401,10 @@ public class MainFrame extends JFrame implements ActionListener {
 
                 //String[] row ;
                 for (int i =0; i <1; i++) {
-                    //System.out.println(item.length);
 
                     temp.add(new String[]{"","","","",""});
                 }
 
-                System.out.println(temp.size());
                 //invItemsTable = new JTable(invItemsData , invItemsCols);
                 invItemsModel.AddCSVData(temp);
                 //invItemsTable.setModel(new DefaultTableModel(invItemsData , invItemsCols));
@@ -410,11 +414,9 @@ public class MainFrame extends JFrame implements ActionListener {
             case "save":
                 int []selectedRowSave = invTable.getSelectedRows();
                 if( invDate.getText().length() > 0 && (customerName.getText().length() >0) && invTotal.getText().length() > 0) {
-                    //saveBtn.setEnabled(false);
-                    //System.out.println((invDate.getText() != ""));
+
                     TableModel invTableModel = invTable.getModel();
                     TableModel invItemsTableModel = invItemsTable.getModel();
-                    //System.out.println(model.getValueAt(0,0));
                     ArrayList<String[]> newRow = new ArrayList<>();
 
                     String[] newRowTemp = {invNo.getText(), invDate.getText(), customerName.getText(), invTotal.getText()};
@@ -449,8 +451,6 @@ public class MainFrame extends JFrame implements ActionListener {
 
                         }
                     }
-                    //System.out.println(newRow.get(indexExistItem)[1]);
-                    //model.setValueAt(newRowTemp[0],Integer.valueOf(invNo.getText())-1,0);
 
                     ActionsController.saveInvoice(invoiceHeaderModel, invItemsModel, readInvFile, readItemsFile, newRowTemp);
                     if (indexExistItem >= 0){
@@ -468,7 +468,14 @@ public class MainFrame extends JFrame implements ActionListener {
             case "delete":
                 int []selectedRow = invTable.getSelectedRows();
                 if (selectedRow.length > 0) {
-                    ActionsController.deleteInvoice(this, invoiceHeaderModel, selectedRow[0]);
+                    ArrayList<String[]> itemsAfterDelete = ActionsController.deleteInvoice(this, invoiceHeaderModel, readItemsFile, selectedRow[0]);
+                    String invTablePath = "src/main/java/dataFiles/InvoiceHeader.csv";
+                    String invTableItemsPath = "src/main/java/dataFiles/InvoiceLine.csv";
+                    readItemsFile = itemsAfterDelete;
+                    ArrayList<String[]> newArrayList = new ArrayList<>();
+
+                    FileOperations.writeFiles(invTablePath,invTableItemsPath,readInvFile,itemsAfterDelete);
+
                     if (invoiceHeaderModel.getRowCount() > 0) {
                         if (invoiceHeaderModel.getRowCount() > selectedRow[0]) {
 
@@ -477,8 +484,8 @@ public class MainFrame extends JFrame implements ActionListener {
                         }
                         else{
                             invTable.setRowSelectionInterval(selectedRow[0] - 1, selectedRow[0] - 1);
-                            //invoiceHeaderModel.fireTableChanged(new TableModelEvent(invoiceHeaderModel));
                         }
+
                     }
 
                 }       else{
@@ -514,7 +521,11 @@ public class MainFrame extends JFrame implements ActionListener {
                     invItemsModel.AddCSVData(temp4);
 
                 }
+
+
+
                 break;
+// end of delete --- in case the user click on delete button
 
             case "cancel":
                 try {
@@ -523,8 +534,6 @@ public class MainFrame extends JFrame implements ActionListener {
                 //ActionsController.cancelInvoice();
                 selectedRow = invTable.getSelectedRows();
                 if(selectedRow.length>0){
-                    System.out.println(invTable.getRowCount()-1);
-                    System.out.println(selectedRow[0]);
 
                     if (invTable.getRowCount()-1 > selectedRow[0]){
                         invTable.setRowSelectionInterval(selectedRow[0]+1, selectedRow[0]+1);
@@ -608,18 +617,19 @@ public class MainFrame extends JFrame implements ActionListener {
                     for (String[] item : readItemsFile) {
                         //item[]
                         String[] row = item;
-                        double itemTotal =  Double.valueOf(row[3]) * Integer.valueOf(row[4]);
-                        String[] row1 = new String[]{row[0], row[2], row[3], row[4], String.valueOf(itemTotal)};
-                        //System.out.println(invTable.getValueAt(selectedRow[0],1));
-                        if(row[1].equals(invTable.getValueAt(selectedRow[0],0))){
-                            temp.add(row1);
-                            //System.out.println(row1[0]);
+                        try{
 
+                        double itemTotal =  Double.valueOf(row[3]) * Integer.valueOf(row[4]);
+                            String[] row1 = new String[]{row[0], row[2], row[3], row[4], String.valueOf(itemTotal)};
+                            if(row[1].equals(invTable.getValueAt(selectedRow[0],0))){
+                                temp.add(row1);
+                            }
+                            invItemsModel.AddCSVData(temp);
+                        }catch (NumberFormatException e2){
+                            JOptionPane.showMessageDialog(invItemsTable,"Number format not valid: "+ e2.getMessage());
                         }
-                        invItemsModel.AddCSVData(temp);
-                        //System.out.println("-------------");
+
                     }
-                    //System.out.println(readItemsFile.get(0)[1]);
                 }
 
 
@@ -643,10 +653,7 @@ public class MainFrame extends JFrame implements ActionListener {
         rowSelectionModel.addListSelectionListener(new ListSelectionListener() {
 
             public void valueChanged(ListSelectionEvent e) {
-                //System.out.println(invTotal.getText().length());
-                System.out.println("clicked");
                 if(invTotal.getText().length()>0){
-                    System.out.println(Double.valueOf(invTotal.getText()));
                     totalInvItems[0] = Double.valueOf(invTotal.getText());
                 }
                 else{
@@ -658,8 +665,6 @@ public class MainFrame extends JFrame implements ActionListener {
                 int[] selectedColumns = itemsTable.getSelectedColumns();
 
                 if(selectedRow.length >0){
-                //System.out.println("selected");
-
                     ArrayList<String[]> temp = new ArrayList<>();
 
                     ArrayList<String[]> dataModel = invItemsModel.Data;
@@ -684,8 +689,6 @@ public class MainFrame extends JFrame implements ActionListener {
                                     isNum = true;
 
                                 }else{
-
-                                System.out.println("try");
                                 isNum = false;
                                 }
                                 //break;
@@ -694,7 +697,6 @@ public class MainFrame extends JFrame implements ActionListener {
 
                             catch(NumberFormatException ee)
                             {
-                                System.out.println("catch");
                                 isNum = true;
 
                             }
@@ -712,14 +714,14 @@ public class MainFrame extends JFrame implements ActionListener {
                                     result3 = JOptionPane.showInputDialog("Enter item count:");
 
                                     Integer.parseInt(result3);
-                                    System.out.println("try");
+
                                     isNum = false;
                                     //break;
                                 }
 
                                 catch(NumberFormatException ee)
                                 {
-                                    System.out.println("catch");
+
                                     isNum = true;
                                     //break;
                                 }
@@ -741,8 +743,6 @@ public class MainFrame extends JFrame implements ActionListener {
                             totalInvItems[0]=0.0;
                             invTotal.setText(itemTotal);
                             String[] row1 = new String[]{String.valueOf(1), result1, result2, result3,String.valueOf(singleItem)};
-                            //System.out.println(invTable.getValueAt(selectedRow[0],1));
-                            //System.out.println(dataModel.get(0)[1]);
                             if (dataModel.get(0)[1] == "") {
                                 temp.add(row1);
                             } else {

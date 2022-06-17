@@ -22,21 +22,17 @@ public class ActionsController {
         String invTablePath = "src/main/java/dataFiles/InvoiceHeader.csv";
         String invTableItemsPath = "src/main/java/dataFiles/InvoiceLine.csv";
         int flag = -1;
-        System.out.println( readFile.size());
         for ( int i=0; i < readFile.size(); i++) {
             if (readFile.get(i)[0] == row[0]){
                 flag = i;
                 break;
-                //System.out.println("index exist");
             }
             else {
                 flag = -1;
-               System.out.println("index doesn't exist");
             }
         }
 
         if (flag >=0){
-            System.out.println("Edit");
             readFile.set(flag, row);
              // if (readItemsFile.size()< )
             //readItemsFile.addAll(addInvIndexRow(invoiceLineModel,readItemsFile, Integer.parseInt(row[0])));
@@ -61,8 +57,9 @@ public class ActionsController {
 
 
 
-    public static void deleteInvoice(Component parent , InvoiceHeaderModel model, int row) {
+    public static ArrayList<String[]> deleteInvoice(Component parent , InvoiceHeaderModel model, ArrayList<String[]> invItemFile , int row) {
 
+        ArrayList<String[]> arrayListTemp = new ArrayList<>();
         if (row < 0) {
             JOptionPane.showMessageDialog(parent,
                     "No row is selected! Please select one row",
@@ -71,13 +68,32 @@ public class ActionsController {
         } else {
             //DefaultTableModel model = (DefaultTableModel) invTable.getModel();
 
-            if(JOptionPane.showConfirmDialog(parent,"Are you sure ???") == 0){
+            if (JOptionPane.showConfirmDialog(parent, "Are you sure ???") == 0) {
 
-            model.deleteRow(row);
-            model.fireTableDataChanged();
+
+
+                if (invItemFile.size() > 0) {
+                    for (int i = 0; i < invItemFile.size(); i++) {
+
+                        if (invItemFile.get(i)[1] != (String) model.getValueAt(row, 0)) {
+                            try {
+
+
+                                    arrayListTemp.add(i, invItemFile.get(i));
+
+                            } catch (IndexOutOfBoundsException e) {
+                            }
+                        }
+                    }
+                }
+                model.deleteRow(row);
+                model.fireTableDataChanged();
 
             }
         }
+
+
+        return arrayListTemp;
     }
 
     public static void cancelInvoice() {
@@ -95,12 +111,10 @@ public class ActionsController {
                 if ((column!=model.getColumnCount()-1)){
 
                 singleRow[column] = (String) model.getValueAt(row, column);
-                    System.out.println(model.getColumnName(column));
                 }
 
             }
             singleRow = new String[]{singleRow[0], String.valueOf(rowIndex), singleRow[1],singleRow[2],singleRow[3]};
-            System.out.println("Total: " + singleRow.length);
             allData.add(row,singleRow);
             //allData.a
 //            if (singleRow[0] == invNo.getText()) {
@@ -126,7 +140,6 @@ public class ActionsController {
                 if ((column!=model.getColumnCount()-1)){
 
                     singleRow[column] = (String) model.getValueAt(row, column);
-                    System.out.println(model.getColumnName(column));
                 }
 
             }
@@ -134,7 +147,6 @@ public class ActionsController {
             for (String[] itemRow: readItemsFile) {
                 if (itemRow[0] != model.getValueAt(row,0) && itemRow[1] == String.valueOf(rowIndex)){
                     singleRow = new String[]{singleRow[0], String.valueOf(rowIndex), singleRow[1],singleRow[2],singleRow[3]};
-                    System.out.println("Total: " + singleRow.length);
                     allData.add(row,singleRow);
                     //break;
                     //allData.a

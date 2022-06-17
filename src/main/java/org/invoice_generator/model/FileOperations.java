@@ -53,11 +53,11 @@ public class FileOperations {
             // create FileWriter object with file as parameter
             FileWriter outputFile = new FileWriter(file);
             CSVWriter writer = new CSVWriter(outputFile, CSVWriter.DEFAULT_SEPARATOR, CSVWriter.NO_QUOTE_CHARACTER,
-                                             CSVWriter.DEFAULT_ESCAPE_CHARACTER,CSVWriter.DEFAULT_LINE_END);
+                                             CSVWriter.NO_ESCAPE_CHARACTER,CSVWriter.DEFAULT_LINE_END);
 
             FileWriter outputFile2 = new FileWriter(file2);
             CSVWriter writer2 = new CSVWriter(outputFile2, CSVWriter.DEFAULT_SEPARATOR, CSVWriter.NO_QUOTE_CHARACTER,
-                    CSVWriter.DEFAULT_ESCAPE_CHARACTER,CSVWriter.DEFAULT_LINE_END);
+                    CSVWriter.NO_ESCAPE_CHARACTER,CSVWriter.DEFAULT_LINE_END);
 
             writer.writeAll(invTable);
             writer2.writeAll(invItems);
