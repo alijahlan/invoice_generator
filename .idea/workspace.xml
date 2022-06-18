@@ -4,12 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b5d22742-6d91-4528-9a62-4d7d9a05a51e" name="Changes" comment="Add test method to print all data, furthermore do some enhancement on to delete and retrieve data">
+    <list default="true" id="b5d22742-6d91-4528-9a62-4d7d9a05a51e" name="Changes" comment="Screenshots folder">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/dataFiles/InvoiceHeader.csv" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dataFiles/InvoiceHeader.csv" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/dataFiles/InvoiceLine.csv" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dataFiles/InvoiceLine.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/invoice_generator/controller/ActionsController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/invoice_generator/controller/ActionsController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/invoice_generator/view/MainFrame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/invoice_generator/view/MainFrame.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/invoice_generator/App.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/invoice_generator/App.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -38,15 +37,15 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "settings.editor.selected.configurable": "preferences.pluginManager"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;
   }
-}]]></component>
+}</component>
   <component name="RunManager">
     <configuration name="App" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="org.invoice_generator.App" />
@@ -76,6 +75,7 @@
       <option name="presentableId" value="Default" />
       <updated>1654638736848</updated>
       <workItem from="1654638738496" duration="63893000" />
+      <workItem from="1655555808955" duration="6578000" />
     </task>
     <task id="LOCAL-00001" summary="git test">
       <created>1654639347824</created>
@@ -126,7 +126,14 @@
       <option name="project" value="LOCAL" />
       <updated>1655483765946</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="Screenshots folder">
+      <created>1655512681270</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1655512681270</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -150,7 +157,8 @@
     <MESSAGE value="Show the total invoice" />
     <MESSAGE value="Add maven opencsv dependency to save CSV files and load files" />
     <MESSAGE value="Add test method to print all data, furthermore do some enhancement on to delete and retrieve data" />
-    <option name="LAST_COMMIT_MESSAGE" value="Add test method to print all data, furthermore do some enhancement on to delete and retrieve data" />
+    <MESSAGE value="Screenshots folder" />
+    <option name="LAST_COMMIT_MESSAGE" value="Screenshots folder" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
