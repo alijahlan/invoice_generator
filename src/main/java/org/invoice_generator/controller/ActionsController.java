@@ -59,6 +59,7 @@ public class ActionsController {
 
     public static ArrayList<String[]> deleteInvoice(Component parent , InvoiceHeaderModel model, ArrayList<String[]> invItemFile , int row) {
 
+       String value = (String) model.getValueAt(row, 0);
         ArrayList<String[]> arrayListTemp = new ArrayList<>();
         if (row < 0) {
             JOptionPane.showMessageDialog(parent,
@@ -75,10 +76,8 @@ public class ActionsController {
                 if (invItemFile.size() > 0) {
                     for (int i = 0; i < invItemFile.size(); i++) {
 
-                        if (invItemFile.get(i)[1] != (String) model.getValueAt(row, 0)) {
+                        if (!invItemFile.get(i)[1].equals(model.getValueAt(row, 0))) {
                             try {
-
-
                                     arrayListTemp.add(i, invItemFile.get(i));
 
                             } catch (IndexOutOfBoundsException e) {
@@ -92,7 +91,15 @@ public class ActionsController {
             }
         }
 
+        for ( String[] item: arrayListTemp
+             ) {
 
+            for ( String col: item
+                 ) {
+                System.out.print(col+" ,");
+            }
+            System.out.println("");
+        }
         return arrayListTemp;
     }
 

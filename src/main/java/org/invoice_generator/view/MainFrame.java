@@ -411,71 +411,21 @@ public class MainFrame extends JFrame implements ActionListener {
 
                 break;
 
-            case "save":
-                int []selectedRowSave = invTable.getSelectedRows();
-                if( invDate.getText().length() > 0 && (customerName.getText().length() >0) && invTotal.getText().length() > 0) {
-
-                    TableModel invTableModel = invTable.getModel();
-                    TableModel invItemsTableModel = invItemsTable.getModel();
-                    ArrayList<String[]> newRow = new ArrayList<>();
-
-                    String[] newRowTemp = {invNo.getText(), invDate.getText(), customerName.getText(), invTotal.getText()};
-
-                    boolean isExist = false;
-                    int indexExistItem = -1;
-                    for (int row = 0; row < invTableModel.getRowCount(); row++) {
-                        String[] singleRow = new String[invTableModel.getColumnCount()];
-                        for (int column = 0; column < invTableModel.getColumnCount(); column++) {
-                            singleRow[column] = (String) invTableModel.getValueAt(row, column);
-
-                        }
-
-                        newRow.add(singleRow);
-
-                        if (singleRow[0] == invNo.getText()) {
-                            isExist = true;
-                            indexExistItem = row;
-
-
-                        }
-                    }
-
-                    if (!isExist) {
-
-                        newRow.add(newRowTemp);
-
-                    } else {
-                        if (indexExistItem >= 0) {
-
-                            newRow.set(indexExistItem, newRowTemp);
-
-                        }
-                    }
-
-                    ActionsController.saveInvoice(invoiceHeaderModel, invItemsModel, readInvFile, readItemsFile, newRowTemp);
-                    if (indexExistItem >= 0){
-                        invTable.setRowSelectionInterval(indexExistItem, indexExistItem);
-                }
-                    else{
-                        invTable.setRowSelectionInterval(invTable.getRowCount()-1, invTable.getRowCount()-1);
-                    }
-                }
-                else{
-                    JOptionPane.showMessageDialog(this, "Please complete all fields");
-                }
-                break;
 
             case "delete":
                 int []selectedRow = invTable.getSelectedRows();
                 if (selectedRow.length > 0) {
-                    ArrayList<String[]> itemsAfterDelete = ActionsController.deleteInvoice(this, invoiceHeaderModel, readItemsFile, selectedRow[0]);
+                    //readItemsFile = FileOperations.readFile(invTableItemsPath,this);
+                   ArrayList<String[]> itemsAfterDelete = ActionsController.deleteInvoice(this, invoiceHeaderModel, readItemsFile, selectedRow[0]);
                     String invTablePath = "src/main/java/dataFiles/InvoiceHeader.csv";
                     String invTableItemsPath = "src/main/java/dataFiles/InvoiceLine.csv";
-                    readItemsFile = itemsAfterDelete;
+                    //readItemsFile = itemsAfterDelete;
                     ArrayList<String[]> newArrayList = new ArrayList<>();
 
                     FileOperations.writeFiles(invTablePath,invTableItemsPath,readInvFile,itemsAfterDelete);
-
+                    readItemsFile = FileOperations.readFile(new File(invTableItemsPath),this);
+                    invItemsModel.AddCSVData(readItemsFile);
+                    readItemsFile = itemsAfterDelete;
                     if (invoiceHeaderModel.getRowCount() > 0) {
                         if (invoiceHeaderModel.getRowCount() > selectedRow[0]) {
 
@@ -526,6 +476,62 @@ public class MainFrame extends JFrame implements ActionListener {
 
                 break;
 // end of delete --- in case the user click on delete button
+
+
+            case "save":
+                int []selectedRowSave = invTable.getSelectedRows();
+                if( invDate.getText().length() > 0 && (customerName.getText().length() >0) && invTotal.getText().length() > 0) {
+
+                    TableModel invTableModel = invTable.getModel();
+                    TableModel invItemsTableModel = invItemsTable.getModel();
+                    ArrayList<String[]> newRow = new ArrayList<>();
+
+                    String[] newRowTemp = {invNo.getText(), invDate.getText(), customerName.getText(), invTotal.getText()};
+
+                    boolean isExist = false;
+                    int indexExistItem = -1;
+                    for (int row = 0; row < invTableModel.getRowCount(); row++) {
+                        String[] singleRow = new String[invTableModel.getColumnCount()];
+                        for (int column = 0; column < invTableModel.getColumnCount(); column++) {
+                            singleRow[column] = (String) invTableModel.getValueAt(row, column);
+
+                        }
+
+                        newRow.add(singleRow);
+
+                        if (singleRow[0].equals(invNo.getText())) {
+                            isExist = true;
+                            indexExistItem = row;
+
+
+                        }
+                    }
+
+                    if (!isExist) {
+
+                        newRow.add(newRowTemp);
+
+                    } else {
+                        if (indexExistItem >= 0) {
+
+                            newRow.set(indexExistItem, newRowTemp);
+
+                        }
+                    }
+
+                    ActionsController.saveInvoice(invoiceHeaderModel, invItemsModel, readInvFile, readItemsFile, newRowTemp);
+                    if (indexExistItem >= 0){
+                        invTable.setRowSelectionInterval(indexExistItem, indexExistItem);
+                    }
+                    else{
+                        invTable.setRowSelectionInterval(invTable.getRowCount()-1, invTable.getRowCount()-1);
+                    }
+                }
+                else{
+                    JOptionPane.showMessageDialog(this, "Please complete all fields");
+                }
+                break;
+
 
             case "cancel":
                 try {
