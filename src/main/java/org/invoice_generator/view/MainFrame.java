@@ -23,8 +23,6 @@ import java.util.regex.Pattern;
 
 public class MainFrame extends JFrame implements ActionListener {
 
-//    using to add indexing to the items' table rows
-    //private static int counter=0;
 
 //    Menu bar params
     JMenuBar menuBar;
@@ -79,15 +77,7 @@ public class MainFrame extends JFrame implements ActionListener {
         invItemsModel = new InvoiceLineModel();
         invItemsModel.AddCSVData(readItemsFile);
 
-       //invItemsCols = new String[]{"No.", "Item Name", "Item Price", "Count", "Item Total"};
-        //invItemsData = new String[][]{};
-
         invItemsTable = new JTable(invItemsModel);
-        //invItemsTable.setModel(new DefaultTableModel(invItemsData , invItemsCols));
-
-        //ActionsController.createInvoice(invItemsData);
-
-
 
 
         //        Main frame setting
@@ -122,13 +112,9 @@ public class MainFrame extends JFrame implements ActionListener {
         Container container = new Container();
         container.setLayout(new BoxLayout(getContentPane(), BoxLayout.X_AXIS));
         JPanel leftPanel = new JPanel(new FlowLayout(FlowLayout.LEADING));
-        //leftPanel.setBackground(Color.BLUE);
-        //leftPanel.setBounds(0,0, getWidth() / 2, 500);
         leftPanel.setAlignmentX(SwingConstants.LEFT);
 
         JPanel rightPanel = new JPanel(new FlowLayout(FlowLayout.LEADING));
-        //rightPanel.setBackground(Color.RED);
-        //rightPanel.setBounds(getWidth()/2,0, 500, 500);
         rightPanel.setAlignmentX(SwingConstants.LEFT);
 
 
@@ -147,7 +133,6 @@ public class MainFrame extends JFrame implements ActionListener {
         renderer.setHorizontalAlignment(JLabel.LEFT);
 
         EmptyBorder labelMargin = new EmptyBorder(20,10,15,0);
-        //leftPanel.setLayout(new FlowLayout());
         JLabel lbl = new JLabel("Invoices Table");
         lbl.setBorder(labelMargin);
 
@@ -267,12 +252,6 @@ public class MainFrame extends JFrame implements ActionListener {
         JPanel itemsList = new JPanel();
         itemsList.setBorder(titlePanel);
 
-//        invItemsModel = new InvoiceLineModel();
-//        invItemsModel.AddCSVData(readItemsFile);
-//        invItemsTable = new JTable(invItemsModel);
-//        //invItemsTable = new JTable(invItemsData , invItemsCols);
-//        //invItemsTable.setModel(new DefaultTableModel(invItemsData , invTableCols));
-//        //invTableModel = (DefaultTableModel) invTable.getModel();
 
         JTableHeader tableHeaderListItems = invItemsTable.getTableHeader();
         tableHeaderListItems.setBackground(Color.WHITE);
@@ -390,8 +369,6 @@ public class MainFrame extends JFrame implements ActionListener {
 
                 }
 
-
-                //invItemsCols = new String[]{"No.", "Item Name", "Item Price", "Count", "Item Total"};
                 invItemsData = new String[][]{
                         {},
                         {},
@@ -405,17 +382,13 @@ public class MainFrame extends JFrame implements ActionListener {
                     temp.add(new String[]{"","","","",""});
                 }
 
-                //invItemsTable = new JTable(invItemsData , invItemsCols);
                 invItemsModel.AddCSVData(temp);
-                //invItemsTable.setModel(new DefaultTableModel(invItemsData , invItemsCols));
-
                 break;
 
 
             case "delete":
                 int []selectedRow = invTable.getSelectedRows();
                 if (selectedRow.length > 0) {
-                    //readItemsFile = FileOperations.readFile(invTableItemsPath,this);
                    ArrayList<String[]> itemsAfterDelete = ActionsController.deleteInvoice(this, invoiceHeaderModel, readItemsFile, selectedRow[0]);
                     String invTablePath = "src/main/java/dataFiles/InvoiceHeader.csv";
                     String invTableItemsPath = "src/main/java/dataFiles/InvoiceLine.csv";
@@ -455,13 +428,7 @@ public class MainFrame extends JFrame implements ActionListener {
 
 
                 }
-                //invItemsCols = new String[]{"No.", "Item Name", "Item Price", "Count", "Item Total"};
                 invItemsData = new String[][]{};
-
-                //invItemsTable = new JTable(invItemsData , invItemsCols);
-                //invItemsTable.setModel(new DefaultTableModel(invItemsData , invTableCols));
-                //ArrayList<String> tempModel = invTable;
-                //invoiceHeaderModel.AddCSVData(readInvFile);
 
                 if(invNo.getText().length() == 0){
                     invDate.setEditable(false);
@@ -537,7 +504,6 @@ public class MainFrame extends JFrame implements ActionListener {
                 try {
 
 
-                //ActionsController.cancelInvoice();
                 selectedRow = invTable.getSelectedRows();
                 if(selectedRow.length>0){
 
@@ -558,8 +524,6 @@ public class MainFrame extends JFrame implements ActionListener {
                         }
 
                     }
-
-                //selectedRow = invTable.getSelectedRows();
 
                     invNo.setText((String) invTable.getValueAt(selectedRow[0],0));
                     invDate.setText((String) invTable.getValueAt(selectedRow[0],1));

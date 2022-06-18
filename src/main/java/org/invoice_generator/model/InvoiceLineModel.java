@@ -6,9 +6,6 @@ import java.util.Date;
 
 public class InvoiceLineModel extends AbstractTableModel {
 
-    String itemName;
-    double itemPrice;
-
     public InvoiceLineModel(){
         super();
     }

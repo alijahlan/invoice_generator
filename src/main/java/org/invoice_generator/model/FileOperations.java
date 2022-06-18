@@ -37,10 +37,6 @@ public class FileOperations {
         return data;
     }
 
-    void writeFiles(InvoiceHeader[] data){
-
-    }
-
 
     public static void writeFiles(String invFilePath,String itemsFilePath, ArrayList<String[]> invTable,ArrayList<String[]> invItems )
     {

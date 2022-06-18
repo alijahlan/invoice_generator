@@ -6,12 +6,6 @@ import java.util.Date;
 
 public class InvoiceHeaderModel extends AbstractTableModel {
 
-    int invoiceNumber;
-    Date invoiceDate;
-    String customerName;
-    double invoiceTotal;
-    InvoiceLine [] InvoiceLines ;
-
     private final String[] columnNames = {"No.", "Date", "Customer", "Total"};
     private ArrayList<String[]> Data = new ArrayList<>();
 
