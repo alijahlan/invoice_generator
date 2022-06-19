@@ -1,15 +1,11 @@
 package org.invoice_generator.model;
 
 import com.opencsv.CSVWriter;
-import com.opencsv.ICSVWriter;
 
 import javax.swing.*;
 import java.awt.*;
 import java.io.*;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Vector;
 
 public class FileOperations {
     public static ArrayList<String[]> readFile(File DataFile, Component parent){
@@ -66,5 +62,20 @@ public class FileOperations {
 
             e.printStackTrace();
         }
+    }
+
+
+    public  static ArrayList<String[]> handleWhiteSpace(ArrayList<String[]> readInvFile){
+                ArrayList<String[]> dataFile = new ArrayList<>();
+                String invoice[] = null;
+        for ( int iRow=0; iRow < readInvFile.size(); iRow++) {
+                invoice = readInvFile.get(iRow);
+            if (invoice[2].contains("-")) {
+                invoice[2] = invoice[2].replace("-", " ");
+
+            }
+            dataFile.set(iRow, invoice);
+        }
+return dataFile;
     }
 }
