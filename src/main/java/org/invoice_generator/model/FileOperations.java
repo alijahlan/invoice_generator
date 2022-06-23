@@ -23,7 +23,7 @@ public class FileOperations {
                 //System.out.println(Arrays.toString(OneRow));
             } // end of while
         } catch (FileNotFoundException e){
-
+                JOptionPane.showMessageDialog(parent, "Sorry, File not found, please select valid file.");
         } catch (ArrayIndexOutOfBoundsException | IOException e){
             String errMsg = e.getMessage();
             JOptionPane.showMessageDialog(parent,"File format not acceptable : " + errMsg);
@@ -34,7 +34,7 @@ public class FileOperations {
     }
 
 
-    public static void writeFiles(String invFilePath,String itemsFilePath, ArrayList<String[]> invTable,ArrayList<String[]> invItems )
+    public static void writeFiles(String invFilePath,String itemsFilePath, ArrayList<String[]> invTable,ArrayList<String[]> invItems, Component parent )
     {
 
         // first create file object for file placed at location
@@ -57,6 +57,9 @@ public class FileOperations {
             // closing writer connection
             writer.close();
             writer2.close();
+
+        }catch (FileNotFoundException ee){
+            JOptionPane.showMessageDialog(parent, "Sorry, File not found, please select valid file.");
         }
         catch (IOException e) {
 
@@ -64,6 +67,39 @@ public class FileOperations {
         }
     }
 
+
+    public static  ArrayList<String> test(Component component){
+
+        final File invTablePath = new File("src/main/java/dataFiles/InvoiceHeader.csv");
+        final File invTableItemsPath = new File("src/main/java/dataFiles/InvoiceLine.csv");
+
+        ArrayList<String[]> invFileData = new ArrayList<>();
+        ArrayList<String[]> itemsFileData = new ArrayList<>();
+
+        invFileData = FileOperations.readFile(invTablePath, component);
+        itemsFileData = FileOperations.readFile(invTableItemsPath, component);
+
+        ArrayList<String> report = new ArrayList<>();
+        int index=0;
+        for ( String[] invoice: invFileData) {
+
+            report.add(index++,"Invoice: "+ invoice[0]);
+            report.add(index++,"{");
+            report.add(index++,"Date: "+ invoice[1] + ", Customer name: "+ invoice[2]);
+
+            for ( String[] item: itemsFileData) {
+                if (item[1].equals(invoice[0])){
+                    report.add(index++,item[2]+", "+item[3]+", "+item[4]);
+
+                }
+            }
+
+            report.add(index++,"}\n");
+
+            System.out.println("");
+        }
+        return report;
+    }
 
     public  static ArrayList<String[]> handleWhiteSpace(ArrayList<String[]> readInvFile){
                 ArrayList<String[]> dataFile = new ArrayList<>();
@@ -78,4 +114,6 @@ public class FileOperations {
         }
 return dataFile;
     }
+
+
 }

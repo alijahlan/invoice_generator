@@ -16,7 +16,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.io.File;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -55,264 +60,11 @@ public class MainFrame extends JFrame implements ActionListener {
 
     JScrollPane tableSP2;
     JPanel rightPanelBtn;
+
+
     public MainFrame(String title) throws HeadlessException {
         super(title);
-
-
-        readInvFile = FileOperations.readFile(invTablePath, this);
-        readItemsFile = FileOperations.readFile(invTableItemsPath, this);
-
-
-        // Demo data for table 1 on the left side
-        invoiceHeaderModel = new InvoiceHeaderModel();
-        invTable = new JTable(invoiceHeaderModel);
-        invTable.setDefaultEditor(Object.class, null);
-        //invTable.setModel(invTableModel);
-        invoiceHeaderModel.AddCSVData(readInvFile);
-
-        // Demo data for table 2 on the right side
-        //invItemsModel = new InvoiceLineModel();
-
-        invItemsModel = new InvoiceLineModel();
-        invItemsModel.AddCSVData(readItemsFile);
-        invItemsTable = new JTable(invItemsModel);
-
-
-        //        Main frame setting
-
-        //setLayout(new BorderLayout());
-        setSize(1300, 800);
-        //setLocation(50,10);
-        Toolkit toolkit = getToolkit();
-        Dimension size = toolkit.getScreenSize();
-        setLocation(size.width / 2 - getWidth() / 2, 0);
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
-        setResizable(false);
-
-//        Menu bar details
-        menuBar = new JMenuBar();
-        file = new JMenu("File");
-        menuBar.add(file);
-        loadFile = new JMenuItem("Load File", 'l');
-        loadFile.addActionListener(this);
-        loadFile.setAccelerator(KeyStroke.getKeyStroke('L', KeyEvent.ALT_DOWN_MASK));
-        loadFile.setActionCommand("load");
-        file.add(loadFile);
-        saveFile = new JMenuItem("Save File", 's');
-        saveFile.addActionListener(this);
-        saveFile.setAccelerator(KeyStroke.getKeyStroke('S', KeyEvent.ALT_DOWN_MASK));
-        saveFile.setActionCommand("save");
-        file.add(saveFile);
-        setJMenuBar(menuBar);
-
-//        Panels
-        setLayout(new BoxLayout(getContentPane(), BoxLayout.X_AXIS));
-        Container container = new Container();
-        container.setLayout(new BoxLayout(getContentPane(), BoxLayout.X_AXIS));
-        JPanel leftPanel = new JPanel(new FlowLayout(FlowLayout.LEADING));
-        leftPanel.setAlignmentX(SwingConstants.LEFT);
-
-        JPanel rightPanel = new JPanel(new FlowLayout(FlowLayout.LEADING));
-        rightPanel.setAlignmentX(SwingConstants.LEFT);
-
-
-//        Left Panel Content
-
-        JTableHeader tableHeader = invTable.getTableHeader();
-        tableHeader.setBackground(Color.WHITE);
-
-        JScrollPane tableSP = new JScrollPane(invTable);
-        tableSP.setPreferredSize(new Dimension(getWidth() / 2 - 20, getHeight() - 240));
-        leftPanel.setAlignmentX(Component.LEFT_ALIGNMENT);
-
-        DefaultTableCellRenderer renderer;
-        renderer = (DefaultTableCellRenderer) invTable.getTableHeader().getDefaultRenderer();
-        renderer.setHorizontalAlignment(JLabel.LEFT);
-
-        EmptyBorder labelMargin = new EmptyBorder(20, 10, 15, 0);
-        JLabel lbl = new JLabel("Invoices Table");
-        lbl.setBorder(labelMargin);
-
-
-        // Left panel Buttons
-        JPanel leftPanelBtn = new JPanel(new GridLayout(1, 1, 30, 10));
-
-        createBtn = new JButton("Create New Invoice");
-        createBtn.setActionCommand("create");
-        createBtn.addActionListener(this);
-
-        deleteBtn = new JButton("Delete Invoice");
-        deleteBtn.setActionCommand("delete");
-        deleteBtn.addActionListener(this);
-
-        JLabel emptyLbl = new JLabel("");
-        emptyLbl.setAlignmentX(SwingConstants.LEFT);
-        emptyLbl.setBorder(labelMargin);
-        leftPanelBtn.add(emptyLbl);
-        leftPanelBtn.add(createBtn);
-
-        leftPanelBtn.add(deleteBtn);
-        leftPanelBtn.setAlignmentX(JLabel.CENTER);
-        leftPanel.add(lbl);
-        leftPanel.add(tableSP);
-        leftPanel.add(leftPanelBtn);
-
-
-//        Right panel
-
-        rightPanelInvData = new JPanel(new GridBagLayout());
-        GridBagConstraints gbc = new GridBagConstraints();
-        gbc.fill = GridBagConstraints.HORIZONTAL;
-        gbc.anchor = GridBagConstraints.NORTH;
-        gbc.weighty = 1;
-        rightPanelInvData.setPreferredSize(new Dimension(getWidth() / 2 - 50, 210));
-
-//        Invoice Number
-        JLabel invNoLbl = new JLabel("Invoice Number");
-        gbc.insets = new Insets(20, 0, 0, 0);
-        gbc.weightx = 0.05;
-        gbc.gridx = 0;
-        gbc.gridy = 0;
-        rightPanelInvData.add(invNoLbl, gbc);
-
-        invNo = new JLabel();
-        gbc.weightx = 0.95;
-        gbc.gridx = 1;
-        gbc.gridy = 0;
-        rightPanelInvData.add(invNo, gbc);
-
-
-//        Invoice Date
-        JLabel invDateLbl = new JLabel("Invoice Date");
-        gbc.ipady = 8;
-        gbc.weightx = 0.05;
-        gbc.gridx = 0;
-        gbc.gridy = 1;
-        rightPanelInvData.add(invDateLbl, gbc);
-
-        invDate = new JTextField();
-
-/*        Pattern regxDate = Pattern.compile("^\\d{4}-\\d{2}-\\d{2}$");
-        Matcher matchDate = regxDate.matcher(invDate.getText());*/
-
-        gbc.weightx = 0.95;
-        gbc.gridx = 1;
-        gbc.gridy = 1;
-
-        rightPanelInvData.add(invDate, gbc);
-
-
-//        Customer Name
-        JLabel customerNameLbl = new JLabel("Customer Name");
-        gbc.ipady = 8;
-        gbc.weightx = 0.05;
-        gbc.gridx = 0;
-        gbc.gridy = 2;
-        rightPanelInvData.add(customerNameLbl, gbc);
-
-        customerName = new JTextField();
-        gbc.weightx = 0.95;
-        gbc.gridx = 1;
-        gbc.gridy = 2;
-        rightPanelInvData.add(customerName, gbc);
-
-
-//        Invoice Total
-        JLabel invTotalLbl = new JLabel("Invoice Total");
-        gbc.insets = new Insets(20, 0, 0, 0);
-        gbc.weightx = 0.05;
-        gbc.gridx = 0;
-        gbc.gridy = 3;
-        rightPanelInvData.add(invTotalLbl, gbc);
-
-        invTotal = new JLabel();
-        gbc.insets = new Insets(20, 0, 10, 0);
-        gbc.weightx = 0.95;
-        gbc.gridx = 1;
-        gbc.gridy = 3;
-        rightPanelInvData.add(invTotal, gbc);
-
-        guideLbl = new JLabel("To add an Item click the Table");
-        guideLbl.setForeground(Color.RED);
-        gbc.insets = new Insets(20, 0, 0, 0);
-        gbc.fill = GridBagConstraints.HORIZONTAL;
-        gbc.gridwidth = 2;
-        gbc.gridx = 0;
-        gbc.gridy = 4;
-        rightPanelInvData.add(guideLbl, gbc);
-
-
-// Group of Items for each invoice
-
-        Border titlePanel = BorderFactory.createTitledBorder("Invoice Items");
-        JPanel itemsList = new JPanel();
-        itemsList.setBorder(titlePanel);
-
-
-        JTableHeader tableHeaderListItems = invItemsTable.getTableHeader();
-        tableHeaderListItems.setBackground(Color.WHITE);
-
-        tableSP2 = new JScrollPane(invItemsTable);
-        tableSP2.setPreferredSize(new Dimension(getWidth() / 2 - 50, getHeight() - 400));
-        leftPanel.setAlignmentX(Component.LEFT_ALIGNMENT);
-
-        DefaultTableCellRenderer renderer2;
-        renderer2 = (DefaultTableCellRenderer) invItemsTable.getTableHeader().getDefaultRenderer();
-        renderer2.setHorizontalAlignment(JLabel.LEFT);
-
-        itemsList.add(tableSP2);
-
-
-        // Right panel Buttons
-        rightPanelBtn = new JPanel(new GridLayout(1, 1, 100, 10));
-        EmptyBorder labelMargin2 = new EmptyBorder(20, 30, 15, 0);
-        saveBtn = new JButton("Save");
-        saveBtn.setActionCommand("save");
-        saveBtn.addActionListener(this);
-
-        cancelBtn = new JButton("Cancel");
-        cancelBtn.setActionCommand("cancel");
-        cancelBtn.addActionListener(this);
-
-        if (readInvFile.size() <= 0) {
-            cancelBtn.setEnabled(false);
-        }
-
-        if (invDate.getText() == "" || customerName.getText() == "") {
-            saveBtn.setEnabled(false);
-        }
-        JLabel emptyLbl1 = new JLabel("");
-        emptyLbl1.setAlignmentX(SwingConstants.LEFT);
-        emptyLbl1.setBorder(labelMargin2);
-        rightPanelBtn.add(emptyLbl1);
-        rightPanelBtn.add(saveBtn);
-
-        rightPanelBtn.add(cancelBtn);
-        rightPanelBtn.setAlignmentX(JLabel.CENTER);
-
-
-        rightPanel.add(rightPanelInvData);
-        rightPanel.add(itemsList);
-        rightPanel.add(rightPanelBtn);
-
-
-        container.setLayout(new GridLayout(1, 2));
-        container.add(leftPanel);
-        container.add(rightPanel);
-
-        add(container);
-
-
-        invTable.setRowSelectionAllowed(true);
-
-//        The invoices' table selection listener
-        invTableListener(invTable);
-        invItemsListener(invItemsTable);
-
-        if (invTable.getRowCount() > 0) {
-            invTable.setRowSelectionInterval(0, 0);
-        }
-        invItemsTable.setToolTipText("Click on the invoice items table to add new item");
+        initApp();
     }
 
     @Override
@@ -335,10 +87,11 @@ public class MainFrame extends JFrame implements ActionListener {
                 invoiceHeaderModel.AddCSVData(readInvFile);
                 invItemsModel.AddCSVData(readItemsFile);
 
-                JOptionPane.showMessageDialog(this,"Loading the last update completed successfully");
+                JOptionPane.showMessageDialog(this, "Loading the last update completed successfully");
                 break;
 
             case "create":
+                ActionsController.dateFormatter(invDate);
                 invItemsTable.setEnabled(true);
                 tableSP2.setVisible(true);
                 rightPanelBtn.setVisible(true);
@@ -347,8 +100,8 @@ public class MainFrame extends JFrame implements ActionListener {
                 customerName.setEnabled(true);
                 invTotal.setEnabled(true);
 
-                guideLbl.setFont(new Font("",Font.BOLD,12));
-                guideLbl.setText("To add an Item click the Table");
+                guideLbl.setFont(new Font("", Font.BOLD, 12));
+                guideLbl.setText("To add a new Item click on the following table ");
 
                 saveBtn.setEnabled(true);
                 int index = invoiceHeaderModel.getRowCount() + 1;
@@ -366,7 +119,8 @@ public class MainFrame extends JFrame implements ActionListener {
 
                 ArrayList<String[]> temp = new ArrayList<>();
                 invNo.setText(String.valueOf(index));
-                invDate.setText("");
+                invDate.setText("dd-mm-yyyy");
+                invDate.setForeground(Color.GRAY);
                 customerName.setText("");
                 invTotal.setText("");
                 ArrayList<String[]> temp2 = new ArrayList<>();
@@ -392,24 +146,30 @@ public class MainFrame extends JFrame implements ActionListener {
 
 
             case "delete":
-                int[] selectedRow = invTable.getSelectedRows();
+                int[] selectedRow;
+                selectedRow = invTable.getSelectedRows();
+                invTable.clearSelection();
+                invTable.setRowSelectionInterval(selectedRow[0],selectedRow[0]);
                 if (selectedRow.length > 0) {
                     ArrayList<String[]> itemsAfterDelete = ActionsController.deleteInvoice(this, invoiceHeaderModel, readItemsFile, selectedRow[0]);
+
                     String invTablePath = "src/main/java/dataFiles/InvoiceHeader.csv";
                     String invTableItemsPath = "src/main/java/dataFiles/InvoiceLine.csv";
-                    //readItemsFile = itemsAfterDelete;
+                    readItemsFile = itemsAfterDelete;
                     ArrayList<String[]> newArrayList = new ArrayList<>();
 
-                    FileOperations.writeFiles(invTablePath, invTableItemsPath, readInvFile, itemsAfterDelete);
-                    readItemsFile = FileOperations.readFile(new File(invTableItemsPath), this);
-                    invItemsModel.AddCSVData(readItemsFile);
-                    readItemsFile = itemsAfterDelete;
+                    FileOperations.writeFiles(invTablePath, invTableItemsPath, readInvFile, itemsAfterDelete, this);
+                    //readItemsFile = FileOperations.readFile(new File(invTableItemsPath), this);
+                    //readItemsFile = itemsAfterDelete;
+                    invItemsModel.AddCSVData(itemsAfterDelete);
                     if (invoiceHeaderModel.getRowCount() > 0) {
                         if (invoiceHeaderModel.getRowCount() > selectedRow[0]) {
 
+                            invTable.clearSelection();
                             invTable.setRowSelectionInterval(selectedRow[0], selectedRow[0]);
 
                         } else {
+                            invTable.clearSelection();
                             invTable.setRowSelectionInterval(selectedRow[0] - 1, selectedRow[0] - 1);
                         }
 
@@ -447,56 +207,83 @@ public class MainFrame extends JFrame implements ActionListener {
 
             case "save":
                 int[] selectedRowSave = invTable.getSelectedRows();
-                if (invDate.getText().length() > 0 && (customerName.getText().length() > 0) && invTotal.getText().length() > 0) {
 
-                    TableModel invTableModel = invTable.getModel();
-                    TableModel invItemsTableModel = invItemsTable.getModel();
-                    ArrayList<String[]> newRow = new ArrayList<>();
+                String vDateStr = invDate.getText();
+                DateFormat formatter;
+                formatter = new SimpleDateFormat("dd-mm-yyyy");
+                Date dateTemp = null;
+                try {
+                    dateTemp = (Date) formatter.parse(vDateStr);
+                } catch (ParseException ex) {
 
-                    String customerName1 = customerName.getText().replace(" ", "-");
-                    String[] newRowTemp = {invNo.getText(), invDate.getText(), customerName1, invTotal.getText()};
+                }
+                //System.out.println("output: " + dateTemp);
 
-                    boolean isExist = false;
-                    int indexExistItem = -1;
-                    for (int row = 0; row < invTableModel.getRowCount(); row++) {
-                        String[] singleRow = new String[invTableModel.getColumnCount()];
-                        for (int column = 0; column < invTableModel.getColumnCount(); column++) {
-                            singleRow[column] = String.valueOf(invTableModel.getValueAt(row, column));
+                if (dateTemp != null){
+                    if (invDate.getText().length() > 0 && (customerName.getText().length() > 0) && invTotal.getText().length() > 0) {
 
+                        TableModel invTableModel = invTable.getModel();
+                        TableModel invItemsTableModel = invItemsTable.getModel();
+                        ArrayList<String[]> newRow = new ArrayList<>();
+
+                        String customerName1 = customerName.getText().replace(" ", "-");
+                        String[] newRowTemp = {invNo.getText(), invDate.getText(), customerName1, invTotal.getText()};
+                        String[] singleRow;
+                        boolean isExist = false;
+                        int indexExistItem = 0;
+                        for (int row = 0; row < invTableModel.getRowCount(); row++) {
+                            //System.out.println(row);
+                            singleRow = new String[invTableModel.getColumnCount()];
+                            for (int column = 0; column < invTableModel.getColumnCount(); column++) {
+                                singleRow[column] = String.valueOf(invTableModel.getValueAt(row, column));
+
+                            }
+
+                            newRow.add(singleRow);
+                            //System.out.println(invNo.getText());
+                            //System.out.println(singleRow[0]);
+                            if (singleRow[0].equals(String.valueOf(invNo.getText()))) {
+                                //System.out.println("is exist");
+                                isExist = true;
+                                indexExistItem = row+1;
+                                break;
+
+                            } else {
+                                isExist = false;
+                                //System.out.println("not exist");
+                                indexExistItem=-1;
+                                //break;
+                            }
                         }
 
-                        newRow.add(singleRow);
+                        if (!isExist) {
 
-                        if (singleRow[0].equals(invNo.getText())) {
-                            isExist = true;
-                            indexExistItem = row;
+                            newRow.add(newRowTemp);
 
+                        } else {
+                            if (indexExistItem > 0) {
+                                ArrayList<String[]> arrayListTemp = new ArrayList<>();
+                                newRow.set(indexExistItem-1, newRowTemp);
 
+                            }
                         }
-                    }
+                        ArrayList<String[]> readInvFile1 = new ArrayList<>();
 
-                    if (!isExist) {
 
-                        newRow.add(newRowTemp);
-
+                        ActionsController.saveInvoice(invoiceHeaderModel, invItemsModel, readInvFile, readItemsFile, newRowTemp, this);
+                        if (indexExistItem > 0) {
+                            invTable.setRowSelectionInterval(indexExistItem-1, indexExistItem-1);
+                        } else {
+                            invTable.setRowSelectionInterval(invTable.getRowCount() - 1, invTable.getRowCount() - 1);
+                        }
                     } else {
-                        if (indexExistItem >= 0) {
-
-                            newRow.set(indexExistItem, newRowTemp);
-
-                        }
+                        JOptionPane.showMessageDialog(this, "Please complete all fields");
                     }
-                    ArrayList<String[]> readInvFile1 = new ArrayList<>();
+        } else{
+                    JOptionPane.showMessageDialog(this, "Accepted date format ( dd-mm-yyyy )","Date format not valid!!", JOptionPane.ERROR_MESSAGE);
 
-
-                    ActionsController.saveInvoice(invoiceHeaderModel, invItemsModel, readInvFile, readItemsFile, newRowTemp);
-                    if (indexExistItem >= 0) {
-                        invTable.setRowSelectionInterval(indexExistItem, indexExistItem);
-                    } else {
-                        invTable.setRowSelectionInterval(invTable.getRowCount() - 1, invTable.getRowCount() - 1);
-                    }
-                } else {
-                    JOptionPane.showMessageDialog(this, "Please complete all fields");
+                    invDate.grabFocus();
+                    invDate.setText("");
                 }
                 break;
 
@@ -567,7 +354,7 @@ public class MainFrame extends JFrame implements ActionListener {
         rowSelectionModel.addListSelectionListener(new ListSelectionListener() {
 
             public void valueChanged(ListSelectionEvent e) {
-
+                invDate.setForeground(Color.black);
                 String selectedData = null;
 
                 int[] selectedRow = invTable.getSelectedRows();
@@ -586,10 +373,10 @@ public class MainFrame extends JFrame implements ActionListener {
 
                     invTotal.setEnabled(true);
 
-                    invItemsTable.setEnabled(false);
+                   // invItemsTable.setEnabled(false);
                     guideLbl.setFont(new Font("",Font.BOLD,12));
 
-                    guideLbl.setText("You can't add new item");
+                    //guideLbl.setText("You can't add new item");
 
                     invNo.setText((String) invTable.getValueAt(selectedRow[0], 0));
                     invDate.setText((String) invTable.getValueAt(selectedRow[0], 1));
@@ -631,7 +418,7 @@ public class MainFrame extends JFrame implements ActionListener {
                        invTable.clearSelection();
 
                        guideLbl.setFont(new Font("",Font.BOLD,15));
-                    guideLbl.setText("To show invoices details select an Invoice from the right table");
+                       //guideLbl.setText("To show invoices details select an Invoice from the right table");
 
 
                 }
@@ -756,5 +543,268 @@ public class MainFrame extends JFrame implements ActionListener {
 
     } // end of Items table selection method
 
+private void initApp(){
+
+    readInvFile = FileOperations.readFile(invTablePath, this);
+    readItemsFile = FileOperations.readFile(invTableItemsPath, this);
+
+
+    // Demo data for table 1 on the left side
+    invoiceHeaderModel = new InvoiceHeaderModel();
+    invTable = new JTable(invoiceHeaderModel);
+    invTable.setDefaultEditor(Object.class, null);
+    //invTable.setModel(invTableModel);
+    invoiceHeaderModel.AddCSVData(readInvFile);
+
+    // Demo data for table 2 on the right side
+    //invItemsModel = new InvoiceLineModel();
+
+    invItemsModel = new InvoiceLineModel();
+    invItemsModel.AddCSVData(readItemsFile);
+    invItemsTable = new JTable(invItemsModel);
+
+
+    //        Main frame setting
+
+    setLayout(new GridLayout());
+    setSize(1300, 800);
+    //setLocation(50,10);
+    Toolkit toolkit = getToolkit();
+    Dimension size = toolkit.getScreenSize();
+    setLocation(size.width / 2 - getWidth() / 2, 0);
+    setDefaultCloseOperation(EXIT_ON_CLOSE);
+    setResizable(false);
+
+//        Menu bar details
+    menuBar = new JMenuBar();
+    file = new JMenu("File");
+    menuBar.add(file);
+    loadFile = new JMenuItem("Load File", 'l');
+    loadFile.addActionListener(this);
+    loadFile.setAccelerator(KeyStroke.getKeyStroke('L', KeyEvent.ALT_DOWN_MASK));
+    loadFile.setActionCommand("load");
+    file.add(loadFile);
+    saveFile = new JMenuItem("Save File", 's');
+    saveFile.addActionListener(this);
+    saveFile.setAccelerator(KeyStroke.getKeyStroke('S', KeyEvent.ALT_DOWN_MASK));
+    saveFile.setActionCommand("save");
+    file.add(saveFile);
+    setJMenuBar(menuBar);
+
+//        Panels
+
+    Container container = new Container();
+    container.setLayout(new BoxLayout(getContentPane(), BoxLayout.X_AXIS));
+    JPanel leftPanel = new JPanel(new FlowLayout(FlowLayout.LEADING));
+    leftPanel.setAlignmentX(SwingConstants.LEFT);
+
+    JPanel rightPanel = new JPanel(new FlowLayout(FlowLayout.LEADING));
+    rightPanel.setAlignmentX(SwingConstants.LEFT);
+
+
+//        Left Panel Content
+
+    JTableHeader tableHeader = invTable.getTableHeader();
+    tableHeader.setBackground(Color.WHITE);
+
+    JScrollPane tableSP = new JScrollPane(invTable);
+    tableSP.setPreferredSize(new Dimension(getWidth() / 2 - 20, getHeight() - 240));
+    leftPanel.setAlignmentX(Component.LEFT_ALIGNMENT);
+
+    DefaultTableCellRenderer renderer;
+    renderer = (DefaultTableCellRenderer) invTable.getTableHeader().getDefaultRenderer();
+    renderer.setHorizontalAlignment(JLabel.LEFT);
+
+    EmptyBorder labelMargin = new EmptyBorder(20, 10, 15, 0);
+    JLabel lbl = new JLabel("Invoices Table");
+    lbl.setBorder(labelMargin);
+
+
+    // Left panel Buttons
+    JPanel leftPanelBtn = new JPanel(new GridLayout(1, 1, 30, 10));
+
+    createBtn = new JButton("Create New Invoice");
+    createBtn.setActionCommand("create");
+    createBtn.addActionListener(this);
+
+    deleteBtn = new JButton("Delete Invoice");
+    deleteBtn.setActionCommand("delete");
+    deleteBtn.addActionListener(this);
+
+    JLabel emptyLbl = new JLabel("");
+    emptyLbl.setAlignmentX(SwingConstants.LEFT);
+    emptyLbl.setBorder(labelMargin);
+    leftPanelBtn.add(emptyLbl);
+    leftPanelBtn.add(createBtn);
+
+    leftPanelBtn.add(deleteBtn);
+    leftPanelBtn.setAlignmentX(JLabel.CENTER);
+    leftPanel.add(lbl);
+    leftPanel.add(tableSP);
+    leftPanel.add(leftPanelBtn);
+
+
+//        Right panel
+
+    rightPanelInvData = new JPanel(new GridBagLayout());
+    GridBagConstraints gbc = new GridBagConstraints();
+    gbc.fill = GridBagConstraints.HORIZONTAL;
+    gbc.anchor = GridBagConstraints.NORTH;
+    gbc.weighty = 1;
+    rightPanelInvData.setPreferredSize(new Dimension(getWidth() / 2 - 50, 210));
+
+//        Invoice Number
+    JLabel invNoLbl = new JLabel("Invoice Number");
+    gbc.insets = new Insets(20, 0, 0, 0);
+    gbc.weightx = 0.05;
+    gbc.gridx = 0;
+    gbc.gridy = 0;
+    rightPanelInvData.add(invNoLbl, gbc);
+
+    invNo = new JLabel();
+    gbc.weightx = 0.95;
+    gbc.gridx = 1;
+    gbc.gridy = 0;
+    rightPanelInvData.add(invNo, gbc);
+
+
+//        Invoice Date
+    JLabel invDateLbl = new JLabel("Invoice Date");
+    gbc.ipady = 8;
+    gbc.weightx = 0.05;
+    gbc.gridx = 0;
+    gbc.gridy = 1;
+    rightPanelInvData.add(invDateLbl, gbc);
+
+    invDate = new JTextField("dd-mm-yyyy");
+    invDate.setForeground(Color.GRAY);
+    invDate.addActionListener(this);
+
+
+    //invDate.addFocusListener();
+/*        Pattern regxDate = Pattern.compile("^\\d{4}-\\d{2}-\\d{2}$");
+        Matcher matchDate = regxDate.matcher(invDate.getText());*/
+
+    gbc.weightx = 0.95;
+    gbc.gridx = 1;
+    gbc.gridy = 1;
+
+    rightPanelInvData.add(invDate, gbc);
+
+
+//        Customer Name
+    JLabel customerNameLbl = new JLabel("Customer Name");
+    gbc.ipady = 8;
+    gbc.weightx = 0.05;
+    gbc.gridx = 0;
+    gbc.gridy = 2;
+    rightPanelInvData.add(customerNameLbl, gbc);
+
+    customerName = new JTextField();
+    gbc.weightx = 0.95;
+    gbc.gridx = 1;
+    gbc.gridy = 2;
+    rightPanelInvData.add(customerName, gbc);
+
+
+//        Invoice Total
+    JLabel invTotalLbl = new JLabel("Invoice Total");
+    gbc.insets = new Insets(20, 0, 0, 0);
+    gbc.weightx = 0.05;
+    gbc.gridx = 0;
+    gbc.gridy = 3;
+    rightPanelInvData.add(invTotalLbl, gbc);
+
+    invTotal = new JLabel();
+    gbc.insets = new Insets(20, 0, 10, 0);
+    gbc.weightx = 0.95;
+    gbc.gridx = 1;
+    gbc.gridy = 3;
+    rightPanelInvData.add(invTotal, gbc);
+
+    guideLbl = new JLabel("To add a new Item to the current invoice click on the following table");
+    guideLbl.setForeground(Color.RED);
+    gbc.insets = new Insets(20, 0, 0, 0);
+    gbc.fill = GridBagConstraints.HORIZONTAL;
+    gbc.gridwidth = 2;
+    gbc.gridx = 0;
+    gbc.gridy = 4;
+    rightPanelInvData.add(guideLbl, gbc);
+
+
+// Group of Items for each invoice
+
+    Border titlePanel = BorderFactory.createTitledBorder("Invoice Items");
+    JPanel itemsList = new JPanel();
+    itemsList.setBorder(titlePanel);
+
+
+    JTableHeader tableHeaderListItems = invItemsTable.getTableHeader();
+    tableHeaderListItems.setBackground(Color.WHITE);
+
+    tableSP2 = new JScrollPane(invItemsTable);
+    tableSP2.setPreferredSize(new Dimension(getWidth() / 2 - 50, getHeight() - 400));
+    leftPanel.setAlignmentX(Component.LEFT_ALIGNMENT);
+
+    DefaultTableCellRenderer renderer2;
+    renderer2 = (DefaultTableCellRenderer) invItemsTable.getTableHeader().getDefaultRenderer();
+    renderer2.setHorizontalAlignment(JLabel.LEFT);
+
+    itemsList.add(tableSP2);
+
+
+    // Right panel Buttons
+    rightPanelBtn = new JPanel(new GridLayout(1, 1, 100, 10));
+    EmptyBorder labelMargin2 = new EmptyBorder(20, 30, 15, 0);
+    saveBtn = new JButton("Add Item");
+    saveBtn.setActionCommand("save");
+    saveBtn.addActionListener(this);
+
+    cancelBtn = new JButton("Cancel");
+    cancelBtn.setActionCommand("cancel");
+    cancelBtn.addActionListener(this);
+
+    if (readInvFile.size() < 0) {
+        cancelBtn.setEnabled(false);
+    }
+
+    if (invDate.getText() == "" || customerName.getText() == "") {
+        saveBtn.setEnabled(false);
+    }else{
+        saveBtn.setEnabled(true);
+    }
+    JLabel emptyLbl1 = new JLabel("");
+    emptyLbl1.setAlignmentX(SwingConstants.LEFT);
+    emptyLbl1.setBorder(labelMargin2);
+    rightPanelBtn.add(emptyLbl1);
+    rightPanelBtn.add(saveBtn);
+
+    rightPanelBtn.add(cancelBtn);
+    rightPanelBtn.setAlignmentX(JLabel.CENTER);
+
+
+    rightPanel.add(rightPanelInvData);
+    rightPanel.add(itemsList);
+    rightPanel.add(rightPanelBtn);
+
+
+    container.setLayout(new GridLayout(1, 2));
+    container.add(leftPanel);
+    container.add(rightPanel);
+
+    add(container);
+
+
+    invTable.setRowSelectionAllowed(true);
+
+//        The invoices' table selection listener
+    invTableListener(invTable);
+    invItemsListener(invItemsTable);
+
+    if (invTable.getRowCount() > 0) {
+        invTable.setRowSelectionInterval(0, 0);
+    }
+    invItemsTable.setToolTipText("Click on the invoice items table to add new item");
+}
 
 }
