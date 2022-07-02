@@ -15,22 +15,30 @@ Mouse, 35, 1
 
 Invoice: 3
 {
-Date: 22-11-2020, Customer name: Ahmed
+Date: 22-11-2020, Customer name: Yara
 Mobile, 3200, 1
 Cover, 20, 2
-Keyboard, 130, 1
+Headphone, 130, 1
 }
 
 Invoice: 4
 {
-Date: 13-10-2021, Customer name: Sara
+Date: 13-10-2021, Customer name: Eman
 Laptop, 4000, 1
 Mouse, 35, 1
 }
 
 Invoice: 5
 {
-Date: 07-2-2022, Customer name: Morad
-Camera, 5000, 2
-Band, 700, 1
+Date: 22-11-2020, Customer name: Karim
+Mobile, 3200, 1
+Cover, 20, 2
+Headphone, 130, 1
+}
+
+Invoice: 6
+{
+Date: 13-10-2021, Customer name: Hala
+Laptop, 4000, 1
+Mouse, 35, 1
 }
