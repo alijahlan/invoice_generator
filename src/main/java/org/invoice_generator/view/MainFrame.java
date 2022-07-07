@@ -1,7 +1,6 @@
 package org.invoice_generator.view;
 
 import org.invoice_generator.controller.ActionHandler;
-import org.invoice_generator.controller.ActionsController;
 import org.invoice_generator.controller.TableHandler;
 import org.invoice_generator.model.FileOperations;
 import org.invoice_generator.model.InvoiceHeaderModel;
@@ -10,17 +9,14 @@ import org.invoice_generator.model.InvoiceLineModel;
 import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
+
 import javax.swing.table.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.File;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+
 import java.util.ArrayList;
-import java.util.Date;
+
 
 
 public class MainFrame extends JFrame {
@@ -46,7 +42,6 @@ public class MainFrame extends JFrame {
     JLabel guideLbl;
 
     JPanel rightPanelInvData;
-    DefaultTableModel invTableModel;
     InvoiceHeaderModel invoiceHeaderModel;
     InvoiceLineModel invItemsModel;
     ArrayList<String[]> readInvFile;
@@ -57,12 +52,9 @@ public class MainFrame extends JFrame {
 
 
     public MainFrame(String title) throws HeadlessException {
+
         super(title);
         initApp();
-
-
-
-
     }
 
     private void initApp() {
@@ -200,10 +192,6 @@ public class MainFrame extends JFrame {
         invDate.setForeground(Color.GRAY);
 
 
-        //invDate.addFocusListener();
-/*        Pattern regxDate = Pattern.compile("^\\d{4}-\\d{2}-\\d{2}$");
-        Matcher matchDate = regxDate.matcher(invDate.getText());*/
-
         gbc.weightx = 0.95;
         gbc.gridx = 1;
         gbc.gridy = 1;
@@ -328,8 +316,6 @@ public class MainFrame extends JFrame {
         rowSelectionModel.addListSelectionListener(new TableHandler(cancelBtn, invNo, invDate, customerName,
                 invTotal, guideLbl, invTable, tableSP2,
                 rightPanelBtn, invItemsTable, invItemsModel, readItemsFile));
-
-        //invItemsListener(invItemsTable, newItemDialog.itemData);
 
         if (invTable.getRowCount() > 0) {
             invTable.setRowSelectionInterval(0, 0);

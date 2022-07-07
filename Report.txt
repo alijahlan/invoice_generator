@@ -2,9 +2,9 @@ Invoice: 1
 {
 Date: 22-11-2020, Customer name: Ali
 Mobile, 3200, 1
-Cover, 20, 2
 Headphone, 130, 1
 Speakers, 220, 1
+Laptop, 23000, 1
 }
 
 Invoice: 2

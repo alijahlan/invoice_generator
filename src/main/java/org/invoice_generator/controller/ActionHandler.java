@@ -180,7 +180,7 @@ public class ActionHandler implements ActionListener {
                 itemsFile = String.valueOf(invoiceFile.getParentFile());
                 if (!invoiceFile.toString().endsWith(".csv")){
                    invoiceFileStr = invoiceFile.toString()+".csv";
-                    System.out.println(invoiceFileStr);
+
                 }else{
                 invoiceFileStr= invoiceFile.toString();
                 }
@@ -213,7 +213,7 @@ public class ActionHandler implements ActionListener {
             boolean isExist = false;
             int indexExistItem = 0;
             for (int row = 0; row < invTableModel.getRowCount(); row++) {
-                //System.out.println(row);
+
                 singleRow = new String[invTableModel.getColumnCount()];
                 for (int column = 0; column < invTableModel.getColumnCount(); column++) {
                     singleRow[column] = String.valueOf(invTableModel.getValueAt(row, column));
@@ -221,17 +221,16 @@ public class ActionHandler implements ActionListener {
                 }
 
                 newRow.add(singleRow);
-                //System.out.println(invNo.getText());
-                //System.out.println(singleRow[0]);
+
                 if (singleRow[0].equals(String.valueOf(invNo.getText()))) {
-                    //System.out.println("is exist");
+
                     isExist = true;
                     indexExistItem = row + 1;
                     break;
 
                 } else {
                     isExist = false;
-                    //System.out.println("not exist");
+
                     indexExistItem = -1;
                     //break;
                 }
@@ -340,8 +339,7 @@ public class ActionHandler implements ActionListener {
         }
 
         int[] selectedInvRows = invTable.getSelectedRows();
-        System.out.println(selectedItemRow);
-        System.out.println(invItemsTable.getValueAt(invItemsTable.getSelectedRow(), 0));
+
         if (invItemsTable.getRowCount() != 1) {
             if (selectedItemRow > 0 && invItemsTable.getValueAt(invItemsTable.getSelectedRow(), 0) != "") {
 
@@ -354,9 +352,9 @@ public class ActionHandler implements ActionListener {
                 String invTableItemsPath = "src/main/java/dataFiles/InvoiceLine.csv";
                 readItemsFile = itemsAfterDelete;
                 ArrayList<String[]> newArrayList = new ArrayList<>();
-                System.out.println(selectedInvRow);
+
                 double x = Double.valueOf(readInvFile.get(selectedInvRow - 1)[3]) - Double.valueOf(invTotalTemp);
-                System.out.println(x);
+
                 String[] tempRow = readInvFile.get(selectedInvRow - 1);
                 tempRow[3] = String.valueOf(x);
                 readInvFile.set(selectedInvRow - 1, tempRow);

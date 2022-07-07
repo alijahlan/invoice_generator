@@ -28,7 +28,6 @@ public class NewInvoiceDialog extends JDialog {
     public NewInvoiceDialog(final Frame owner, String title, final int invNo) {
         super(owner, title);
         invNoLbl.setText(String.valueOf(invNo));
-        //invDateJTF.setForeground(Color.GRAY);
         setInvNo(String.valueOf(invNo));
 
 

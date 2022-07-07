@@ -21,7 +21,6 @@ public class InvoiceLineModel extends AbstractTableModel {
 
     public  void deleteRow(int row){
         Data.remove(row);
-        //this.fireTableRowsDeleted(row,row);
 
     }
     @Override
@@ -45,8 +44,4 @@ public class InvoiceLineModel extends AbstractTableModel {
         return Data.get(row)[col];
     }
 
-//    @Override
-//    public boolean isCellEditable(int row, int column) {
-//        return true;
-//    }
 }

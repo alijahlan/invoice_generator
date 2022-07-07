@@ -102,7 +102,7 @@ public class TableHandler implements ListSelectionListener {
 
             tableSP2.setVisible(false);
             rightPanelBtn.setVisible(false);
-            //rightPanelInvData.setVisible(false);
+
             invTable.clearSelection();
 
             guideLbl.setFont(new Font("", Font.BOLD, 15));
