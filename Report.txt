@@ -4,6 +4,7 @@ Date: 22-11-2020, Customer name: Ali
 Mobile, 3200, 1
 Cover, 20, 2
 Headphone, 130, 1
+Speakers, 220, 1
 }
 
 Invoice: 2
@@ -12,6 +13,8 @@ Date: 13-10-2021, Customer name: Saleh
 Laptop, 4000, 1
 Mouse, 35, 1
 Keyboard, 200, 2
+Speakers, 220, 1
+Pens, 5, 10
 }
 
 Invoice: 3
@@ -19,6 +22,8 @@ Invoice: 3
 Date: 22-11-2020, Customer name: Yara
 Mobile, 3200, 1
 Cover, 20, 2
+Speakers, 200, 1
+Pens, 5, 20
 }
 
 Invoice: 4
@@ -26,6 +31,9 @@ Invoice: 4
 Date: 13-10-2021, Customer name: Eman
 Laptop, 4000, 1
 Mouse, 35, 1
+Speakers, 350, 1
+Keyboard, 200, 2
+Pens, 5, 15
 }
 
 Invoice: 5
@@ -34,6 +42,8 @@ Date: 22-11-2020, Customer name: Karim
 Mobile, 3200, 1
 Cover, 20, 2
 Headphone, 33, 3
+Speakers, 220, 1
+Pens, 10, 10
 }
 
 Invoice: 6
@@ -42,4 +52,6 @@ Date: 13-10-2021, Customer name: Hala
 Mobile, 3200, 1
 Cover, 20, 2
 Headphone, 33, 3
+Mouse, 200, 2
+Speakers, 300, 1
 }

@@ -248,14 +248,15 @@ public class ActionHandler implements ActionListener {
 
                 }
             }
+            int[] selectedInvRow = invTable.getSelectedRows();
             ArrayList<String[]> readInvFile1 = new ArrayList<>();
-
+            //invTable.setModel(invItemsModel);
             ActionsController.saveInvoice(invoiceHeaderModel, invItemsModel, readInvFile, readItemsFile, newRowTemp, parent);
 
             if (indexExistItem > 0) {
-                invTable.setRowSelectionInterval(indexExistItem - 1, indexExistItem - 1);
+                invTable.setRowSelectionInterval(selectedInvRow[0], selectedInvRow[0]);
             } else {
-                invTable.setRowSelectionInterval(invTable.getRowCount() - 1, invTable.getRowCount() - 1);
+                invTable.setRowSelectionInterval(selectedInvRow[0], selectedInvRow[0]);
             }
         } else {
             JOptionPane.showMessageDialog(parent, "Please complete all fields");
@@ -333,20 +334,20 @@ public class ActionHandler implements ActionListener {
             } catch (ArrayIndexOutOfBoundsException e1) {
                 System.out.println("Delete item error");
                 System.out.println(e1.getMessage());
+            } catch (IndexOutOfBoundsException e2){
+
             }
         }
 
         int[] selectedInvRows = invTable.getSelectedRows();
-        //int[] selectedItemRows = invItemsTable.getSelectedRows();
-
-
-//                invTable.clearSelection();
-//                invTable.setRowSelectionInterval(selectedRow[0], selectedRow[0]);
+        System.out.println(selectedItemRow);
+        System.out.println(invItemsTable.getValueAt(invItemsTable.getSelectedRow(), 0));
         if (invItemsTable.getRowCount() != 1) {
-            if (selectedItemRow > 0 && invItemsTable.getValueAt(selectedItemRow - 1, 0) != "") {
+            if (selectedItemRow > 0 && invItemsTable.getValueAt(invItemsTable.getSelectedRow(), 0) != "") {
 
-                String invTotalTemp = String.valueOf(invItemsTable.getValueAt(selectedItemRow - 1, invItemsTable.getColumnCount() - 1));
-                System.out.println(invTotalTemp);
+                String invTotalTemp = String.valueOf(invItemsTable.getValueAt(invItemsTable.getSelectedRow(), invItemsTable.getColumnCount() - 1));
+
+
                 itemsAfterDelete = ActionsController.deleteItem(parent, readItemsFile, selectedItemRow, selectedInvRow);
                 cancelBtn.setEnabled(false);
                 String invTablePath = "src/main/java/dataFiles/InvoiceHeader.csv";
@@ -360,7 +361,7 @@ public class ActionHandler implements ActionListener {
                 tempRow[3] = String.valueOf(x);
                 readInvFile.set(selectedInvRow - 1, tempRow);
                 FileOperations.writeFiles(invTablePath, invTableItemsPath, readInvFile, itemsAfterDelete, parent);
-                readItemsFile = FileOperations.readFile(new File(invTableItemsPath), parent);
+                //readItemsFile = FileOperations.readFile(new File(invTableItemsPath), parent);
                 //readItemsFile = itemsAfterDelete;
                 invItemsModel.AddCSVData(itemsAfterDelete);
                 if (invTable.getRowCount() > 0) {

@@ -4,19 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b5d22742-6d91-4528-9a62-4d7d9a05a51e" name="Changes" comment="3 specifications require changes is done">
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/invoice_generator/controller/ActionHandler.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/invoice_generator/controller/TableHandler.java" afterDir="false" />
+    <list default="true" id="b5d22742-6d91-4528-9a62-4d7d9a05a51e" name="Changes" comment="2 specifications require changes is done">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Report.txt" beforeDir="false" afterPath="$PROJECT_DIR$/Report.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/dataFiles/InvoiceHeader.csv" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dataFiles/InvoiceHeader.csv" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/dataFiles/InvoiceLine.csv" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dataFiles/InvoiceLine.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/invoice_generator/controller/ActionListener.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/invoice_generator/controller/ActionsController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/invoice_generator/controller/ActionsController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/invoice_generator/model/FileOperations.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/invoice_generator/model/FileOperations.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/invoice_generator/view/MainFrame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/invoice_generator/view/MainFrame.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/invoice_generator/controller/ActionHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/invoice_generator/controller/ActionHandler.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/invoice_generator/view/NewInvoiceDialog.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/invoice_generator/view/NewInvoiceDialog.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/invoice_generator/view/NewItemDialog.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/invoice_generator/view/NewItemDialog.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -96,7 +90,8 @@
       <workItem from="1656328786498" duration="58766000" />
       <workItem from="1656838738427" duration="215000" />
       <workItem from="1656875934515" duration="123000" />
-      <workItem from="1656938365984" duration="62261000" />
+      <workItem from="1656938365984" duration="62605000" />
+      <workItem from="1657201815936" duration="5316000" />
     </task>
     <task id="LOCAL-00001" summary="git test">
       <created>1654639347824</created>
@@ -189,7 +184,14 @@
       <option name="project" value="LOCAL" />
       <updated>1656724373654</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="2 specifications require changes is done">
+      <created>1657199013338</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1657199013338</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -219,7 +221,8 @@
     <MESSAGE value="Load file enhancement" />
     <MESSAGE value="4 specifications require changes is done" />
     <MESSAGE value="3 specifications require changes is done" />
-    <option name="LAST_COMMIT_MESSAGE" value="3 specifications require changes is done" />
+    <MESSAGE value="2 specifications require changes is done" />
+    <option name="LAST_COMMIT_MESSAGE" value="2 specifications require changes is done" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

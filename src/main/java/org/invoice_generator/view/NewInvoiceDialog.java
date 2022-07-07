@@ -143,7 +143,7 @@ public class NewInvoiceDialog extends JDialog {
                 }
 
                 if (dateTemp == null) {
-                    //JOptionPane.showMessageDialog(owner, "Accepted date format ( dd-mm-yyyy )", "Date format not valid!!", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(owner, "Accepted date format ( dd-mm-yyyy )", "Date format not valid!!", JOptionPane.ERROR_MESSAGE);
                     //setVisible(true);
                     invDateJTF.grabFocus();
                     invDateJTF.setText("dd-mm-yyyy");
