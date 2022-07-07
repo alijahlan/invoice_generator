@@ -8,9 +8,9 @@ import java.io.*;
 import java.util.ArrayList;
 
 public class FileOperations {
-    public static ArrayList<String[]> readFile(File DataFile, Component parent){
+    public static ArrayList<String[]> readFile(File DataFile, Component parent) {
 
-        final ArrayList<String[]> data = new ArrayList<> ();
+        final ArrayList<String[]> data = new ArrayList<>();
         //DataFile = new File("src/main/java/dataFiles/InvoiceHeader.csv");
         String[] OneRow;
         try {
@@ -22,20 +22,18 @@ public class FileOperations {
                 data.add(OneRow);
                 //System.out.println(Arrays.toString(OneRow));
             } // end of while
-        } catch (FileNotFoundException e){
-                JOptionPane.showMessageDialog(parent, "Sorry, File not found, please select valid file.");
-        } catch (ArrayIndexOutOfBoundsException | IOException e){
+        } catch (FileNotFoundException e) {
+            JOptionPane.showMessageDialog(parent, "Sorry, File not found, please select valid file.");
+        } catch (ArrayIndexOutOfBoundsException | IOException e) {
             String errMsg = e.getMessage();
-            JOptionPane.showMessageDialog(parent,"File format not acceptable : " + errMsg);
+            JOptionPane.showMessageDialog(parent, "File format not acceptable : " + errMsg);
         }
         // end of Catch
 
         return data;
     }
 
-
-    public static void writeFiles(String invFilePath,String itemsFilePath, ArrayList<String[]> invTable,ArrayList<String[]> invItems, Component parent )
-    {
+    public static void writeFiles(String invFilePath, String itemsFilePath, ArrayList<String[]> invTable, ArrayList<String[]> invItems, Component parent) {
 
         // first create file object for file placed at location
         // specified by filepath
@@ -45,11 +43,11 @@ public class FileOperations {
             // create FileWriter object with file as parameter
             FileWriter outputFile = new FileWriter(file);
             CSVWriter writer = new CSVWriter(outputFile, CSVWriter.DEFAULT_SEPARATOR, CSVWriter.NO_QUOTE_CHARACTER,
-                                             CSVWriter.NO_ESCAPE_CHARACTER,CSVWriter.DEFAULT_LINE_END);
+                    CSVWriter.NO_ESCAPE_CHARACTER, CSVWriter.DEFAULT_LINE_END);
 
             FileWriter outputFile2 = new FileWriter(file2);
             CSVWriter writer2 = new CSVWriter(outputFile2, CSVWriter.DEFAULT_SEPARATOR, CSVWriter.NO_QUOTE_CHARACTER,
-                    CSVWriter.NO_ESCAPE_CHARACTER,CSVWriter.DEFAULT_LINE_END);
+                    CSVWriter.NO_ESCAPE_CHARACTER, CSVWriter.DEFAULT_LINE_END);
 
             writer.writeAll(invTable);
             writer2.writeAll(invItems);
@@ -58,17 +56,15 @@ public class FileOperations {
             writer.close();
             writer2.close();
 
-        }catch (FileNotFoundException ee){
+        } catch (FileNotFoundException ee) {
             JOptionPane.showMessageDialog(parent, "Sorry, File not found, please select valid file.");
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
 
             e.printStackTrace();
         }
     }
 
-
-    public static  ArrayList<String> test(Component component){
+    public static ArrayList<String> test(Component component) {
 
         final File invTablePath = new File("src/main/java/dataFiles/InvoiceHeader.csv");
         final File invTableItemsPath = new File("src/main/java/dataFiles/InvoiceLine.csv");
@@ -80,39 +76,39 @@ public class FileOperations {
         itemsFileData = FileOperations.readFile(invTableItemsPath, component);
 
         ArrayList<String> report = new ArrayList<>();
-        int index=0;
-        for ( String[] invoice: invFileData) {
+        int index = 0;
+        for (String[] invoice : invFileData) {
 
-            report.add(index++,"Invoice: "+ invoice[0]);
-            report.add(index++,"{");
-            report.add(index++,"Date: "+ invoice[1] + ", Customer name: "+ invoice[2]);
+            report.add(index++, "Invoice: " + invoice[0]);
+            report.add(index++, "{");
+            report.add(index++, "Date: " + invoice[1] + ", Customer name: " + invoice[2]);
 
-            for ( String[] item: itemsFileData) {
-                if (item[1].equals(invoice[0])){
-                    report.add(index++,item[2]+", "+item[3]+", "+item[4]);
+            for (String[] item : itemsFileData) {
+                if (item[1].equals(invoice[0])) {
+                    report.add(index++, item[2] + ", " + item[3] + ", " + item[4]);
 
                 }
             }
 
-            report.add(index++,"}\n");
+            report.add(index++, "}\n");
 
             System.out.println("");
         }
         return report;
     }
 
-    public  static ArrayList<String[]> handleWhiteSpace(ArrayList<String[]> readInvFile){
-                ArrayList<String[]> dataFile = new ArrayList<>();
-                String invoice[] = null;
-        for ( int iRow=0; iRow < readInvFile.size(); iRow++) {
-                invoice = readInvFile.get(iRow);
+    public static ArrayList<String[]> handleWhiteSpace(ArrayList<String[]> readInvFile) {
+        ArrayList<String[]> dataFile = new ArrayList<>();
+        String invoice[] = null;
+        for (int iRow = 0; iRow < readInvFile.size(); iRow++) {
+            invoice = readInvFile.get(iRow);
             if (invoice[2].contains("-")) {
                 invoice[2] = invoice[2].replace("-", " ");
 
             }
             dataFile.set(iRow, invoice);
         }
-return dataFile;
+        return dataFile;
     }
 
 

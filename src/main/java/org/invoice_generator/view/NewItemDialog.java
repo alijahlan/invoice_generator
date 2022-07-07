@@ -19,7 +19,7 @@ public class NewItemDialog extends JDialog {
     double itemTotal;
 
 
-    String[] itemData;
+    public String[] itemData;
     JLabel itemNoLbl = new JLabel();
     JTextField itemNameJTF = new JTextField();
     JTextField itemPriceJTF = new JTextField();
@@ -83,10 +83,6 @@ public class NewItemDialog extends JDialog {
 
                         }
 
-
-
-
-
                     if (itemPriceJTF.getText() != null) {
 
 
@@ -103,10 +99,6 @@ public class NewItemDialog extends JDialog {
                                 isNum = false;
                                 //break;
                             }
-
-
-
-
                     }
                 }
 
@@ -129,7 +121,6 @@ public class NewItemDialog extends JDialog {
                 NewItemDialog.this.setVisible(false);
             }
         });
-
 
     }
 

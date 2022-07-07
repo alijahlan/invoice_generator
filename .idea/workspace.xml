@@ -4,15 +4,19 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b5d22742-6d91-4528-9a62-4d7d9a05a51e" name="Changes" comment="4 specifications require changes is done">
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/invoice_generator/view/NewInvoiceDialog.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/invoice_generator/view/NewItemDialog.java" afterDir="false" />
+    <list default="true" id="b5d22742-6d91-4528-9a62-4d7d9a05a51e" name="Changes" comment="3 specifications require changes is done">
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/invoice_generator/controller/ActionHandler.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/invoice_generator/controller/TableHandler.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Report.txt" beforeDir="false" afterPath="$PROJECT_DIR$/Report.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/dataFiles/InvoiceHeader.csv" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dataFiles/InvoiceHeader.csv" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/dataFiles/InvoiceLine.csv" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dataFiles/InvoiceLine.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/invoice_generator/controller/ActionListener.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/invoice_generator/controller/ActionsController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/invoice_generator/controller/ActionsController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/invoice_generator/model/FileOperations.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/invoice_generator/model/FileOperations.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/invoice_generator/view/MainFrame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/invoice_generator/view/MainFrame.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/invoice_generator/view/NewInvoiceDialog.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/invoice_generator/view/NewInvoiceDialog.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/invoice_generator/view/NewItemDialog.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/invoice_generator/view/NewItemDialog.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -41,17 +45,17 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "C:/Users/QA-QC/Desktop/invoice_generator-master",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "preferences.pluginManager"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/QA-QC/Desktop/invoice_generator-master&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyClassDialog.RECENTS_KEY">
       <recent name="org.invoice_generator.view" />
@@ -89,7 +93,10 @@
       <workItem from="1655555808955" duration="8372000" />
       <workItem from="1655565574531" duration="15555000" />
       <workItem from="1655714162453" duration="72238000" />
-      <workItem from="1656328786498" duration="57878000" />
+      <workItem from="1656328786498" duration="58766000" />
+      <workItem from="1656838738427" duration="215000" />
+      <workItem from="1656875934515" duration="123000" />
+      <workItem from="1656938365984" duration="62261000" />
     </task>
     <task id="LOCAL-00001" summary="git test">
       <created>1654639347824</created>
@@ -175,7 +182,14 @@
       <option name="project" value="LOCAL" />
       <updated>1656018581940</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="3 specifications require changes is done">
+      <created>1656724373654</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1656724373654</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -204,7 +218,8 @@
     <MESSAGE value="Code Clean -1" />
     <MESSAGE value="Load file enhancement" />
     <MESSAGE value="4 specifications require changes is done" />
-    <option name="LAST_COMMIT_MESSAGE" value="4 specifications require changes is done" />
+    <MESSAGE value="3 specifications require changes is done" />
+    <option name="LAST_COMMIT_MESSAGE" value="3 specifications require changes is done" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

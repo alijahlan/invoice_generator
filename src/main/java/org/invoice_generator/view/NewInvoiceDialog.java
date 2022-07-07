@@ -15,7 +15,7 @@ public class NewInvoiceDialog extends JDialog {
     String invNo;
     String invDate;
     String invCustomerName;
-    String invTotal="0";
+    public String invTotal="0";
     String[] invoiceData;
 
 
